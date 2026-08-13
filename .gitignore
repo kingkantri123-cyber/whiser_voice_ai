@@ -1,0 +1,83 @@
+﻿# ─────────────────────────────────────────────
+# Secrets & Environment
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─────────────────────────────────────────────
+# Node.js
+# ─────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.pnp
+.pnp.js
+dist/
+build/
+
+# ─────────────────────────────────────────────
+# Python
+# ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Egg / distribution
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy / pyright
+.mypy_cache/
+.pytype/
+
+# ─────────────────────────────────────────────
+# Project-specific output / temp audio files
+# ─────────────────────────────────────────────
+omnivoice_demo_output/
+*.wav
+*.webm
+*.mp3
+*.mp4
+
+# ─────────────────────────────────────────────
+# OS & editor clutter
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains IDEs
+.idea/
+
+# ─────────────────────────────────────────────
+# Logs & temp
+# ─────────────────────────────────────────────
+logs/
+*.log
+tmp/
+temp/

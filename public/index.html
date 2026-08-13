@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Ordering Agent</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px;
+            background: #f9fafb;
+            color: #111827;
+        }
+
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 1.75rem);
+            margin-bottom: 16px;
+        }
+
+        .container {
+            display: flex;
+            gap: 16px;
+        }
+
+        .chat-panel,
+        .cart-panel {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-panel {
+            flex: 2;
+            min-width: 0; /* prevent flex overflow */
+        }
+
+        .cart-panel {
+            flex: 1;
+            min-width: 0;
+        }
+
+        button {
+            padding: 14px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            touch-action: manipulation; /* removes 300ms tap delay on mobile */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #recordBtn {
+            background: #3b82f6;
+            color: white;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        #recordBtn.recording {
+            background: #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+
+        #recordBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .log {
+            height: 400px;
+            overflow-y: auto;
+            padding-right: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .msg {
+            padding: 10px 14px;
+            border-radius: 8px;
+            max-width: 88%;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .msg.user {
+            background: #e0f2fe;
+            align-self: flex-end;
+        }
+
+        .msg.agent {
+            background: #f3f4f6;
+            align-self: flex-start;
+        }
+
+        .status {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            0%   { opacity: 1; }
+            50%  { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* ── Mobile: stack panels vertically ── */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .chat-panel,
+            .cart-panel {
+                padding: 12px;
+            }
+
+            .log {
+                /* use ~45% of the viewport height so the cart is still visible */
+                height: calc(45vh - 60px);
+                min-height: 180px;
+            }
+
+            #recordBtn {
+                padding: 16px 24px;   /* bigger tap target on phone */
+                font-size: 17px;
+            }
+
+            .msg {
+                max-width: 95%;
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                margin-top: 0;
+            }
+        }
+
+        /* ── Very small phones (≤ 360px) ── */
+        @media (max-width: 360px) {
+            .log {
+                height: calc(40vh - 60px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🍕 Voice Ordering Agent</h1>
+
+    <div class="container">
+        <div class="chat-panel">
+            <div id="statusText" class="status">Initializing session...</div>
+            <button id="recordBtn" disabled>Loading...</button>
+            <div id="chatLog" class="log"></div>
+        </div>
+
+        <div class="cart-panel">
+            <h2>🛒 Cart</h2>
+            <div id="cartStatus">Total: $0.00</div>
+            <ul id="cartItems" style="padding-left: 20px;"></ul>
+        </div>
+    </div>
+
+    <script>
+        let sessionId = null;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+
+        const recordBtn = document.getElementById("recordBtn");
+        const statusText = document.getElementById("statusText");
+        const chatLog = document.getElementById("chatLog");
+        const cartStatus = document.getElementById("cartStatus");
+        const cartItems = document.getElementById("cartItems");
+
+        // 1. Initialize session on load
+        async function initSession() {
+            try {
+                const res = await fetch("/api/session", { method: "POST" });
+                const data = await res.json();
+                sessionId = data.sessionId;
+                statusText.innerText = "Ready. Click 'Start Recording' to speak.";
+                recordBtn.innerText = "Start Recording";
+                recordBtn.disabled = false;
+            } catch (err) {
+                statusText.innerText = "Error connecting to server.";
+                console.error(err);
+            }
+        }
+
+        // 2. Setup microphone
+        async function setupAudio() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
+                    audioChunks = [];
+                    await sendAudioToServer(audioBlob);
+                };
+            } catch (err) {
+                alert("Microphone access is required.");
+                console.error(err);
+            }
+        }
+
+        // 3. Handle button click (Start/Stop)
+        recordBtn.addEventListener("click", async () => {
+            if (!mediaRecorder) await setupAudio();
+
+            if (!isRecording) {
+                mediaRecorder.start();
+                isRecording = true;
+                recordBtn.innerText = "Stop Recording";
+                recordBtn.classList.add("recording");
+                statusText.innerText = "Listening...";
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                recordBtn.innerText = "Processing...";
+                recordBtn.classList.remove("recording");
+                recordBtn.disabled = true;
+                statusText.innerText = "Transcribing and thinking...";
+            }
+        });
+
+        // 4. Send audio file to Express server
+        async function sendAudioToServer(blob) {
+            const formData = new FormData();
+            formData.append("sessionId", sessionId);
+            formData.append("audio", blob, "speech.webm");
+
+            try {
+                const res = await fetch("/api/voice-chat", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!res.ok) throw new Error("Server error");
+                const data = await res.json();
+
+                // Update Chat UI
+                appendMessage(data.userText, "user");
+                appendMessage(data.replyText, "agent");
+
+                // Update Cart UI
+                updateCart(data.cart);
+
+                // Play Audio securely via Browser API
+                if (data.audioBase64) {
+                    console.log("Audio Base64 received. Size:", data.audioBase64.length);
+                    const audio = new Audio("data:audio/wav;base64," + data.audioBase64);
+                    audio.play()
+                        .then(() => console.log("Audio played successfully"))
+                        .catch(err => console.error("Audio playback error:", err));
+                } else {
+                    console.warn("No audioBase64 field found in response:", data);
+                }
+
+                // Check if order placed
+                if (data.cart && data.cart.placed) {
+                    statusText.innerText = "Order successfully placed!";
+                    recordBtn.innerText = "Order Complete";
+                } else {
+                    statusText.innerText = "Ready.";
+                    recordBtn.innerText = "Start Recording";
+                    recordBtn.disabled = false;
+                }
+
+            } catch (err) {
+                statusText.innerText = "Error processing voice.";
+                recordBtn.innerText = "Start Recording";
+                recordBtn.disabled = false;
+                console.error(err);
+            }
+        }
+
+        // UI Helpers
+        function appendMessage(text, sender) {
+            if (!text) return;
+            const div = document.createElement("div");
+            div.className = `msg ${sender}`;
+            div.innerText = (sender === "user" ? "👤 You: " : "🤖 Agent: ") + text;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function updateCart(cart) {
+            if (!cart) return;
+            cartStatus.innerText = `Total: $${cart.total.toFixed(2)}`;
+            cartItems.innerHTML = "";
+            cart.lines.forEach(line => {
+                const li = document.createElement("li");
+                li.innerText = `${line.quantity}x ${line.itemName} ($${line.lineTotal.toFixed(2)})`;
+                cartItems.appendChild(li);
+            });
+        }
+
+        // Start
+        initSession();
+    </script>
+</body>
+
+</html>

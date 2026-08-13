@@ -1,0 +1,20 @@
+{
+  "name": "voice-ordering-agent-poc",
+  "version": "0.1.0",
+  "description": "MVP: text-based tool-calling ordering agent (menu, cart, tools) before the voice layer is added",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test:conversation": "node src/scripts/scriptedConversation.js"
+  },
+  "dependencies": {
+    "@google/genai": "^0.3.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "groq-sdk": "^1.5.0",
+    "multer": "^2.2.0",
+    "nanoid": "^5.1.16"
+  }
+}
