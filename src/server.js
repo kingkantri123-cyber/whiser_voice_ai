@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { sessionStore } from "./sessionStore.js";
 import { runTurn } from "./agent.js";
 import { transcribeAudio, generateSpeech } from "./groqServices.js";
+import { saveOrder, getAllOrders } from "./db.js";
 
 const app = express();
 app.use(express.json());
@@ -73,6 +74,12 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
     const audioBuffer = await generateSpeech(agentResult.reply);
     console.log(`Speech generated successfully. Buffer size: ${audioBuffer.length} bytes`);
 
+    // Persist order to JSON DB if it was just placed this turn
+    if (agentResult.cart?.placed) {
+      const session = sessionStore.get(sessionId);
+      if (session) saveOrder(session);
+    }
+
     // Return agent JSON payload along with Base64 audio
     res.json({
       sessionId,
@@ -111,18 +118,22 @@ app.get("/api/cart/:sessionId", (req, res) => {
   res.json(session.cart.view());
 });
 
+// Welcome greeting endpoint — returns TTS audio for the opening message
+app.post("/api/greet", async (_req, res) => {
+  const greeting =
+    "Welcome! Thank you for calling. I'm your voice ordering assistant. " +
+    "Would you like to hear today's menu, or are you ready to place your order?";
+  try {
+    const audioBuffer = await generateSpeech(greeting);
+    res.json({ audioBase64: audioBuffer.toString("base64"), text: greeting });
+  } catch (err) {
+    res.status(500).json({ error: "Greeting failed", detail: err.message });
+  }
+});
+
+// Orders — merged from in-memory store + persisted DB
 app.get("/api/orders", (_req, res) => {
-  const orders = sessionStore
-    .all()
-    .filter((s) => s.cart.placed)
-    .map((s) => ({
-      sessionId: s.id,
-      placedAt: s.cart.placedAt,
-      lines: s.cart.lines,
-      total: s.cart.total(),
-      contact: s.contact,
-      status: s.status,
-    }));
+  const orders = getAllOrders();
   res.json({ orders });
 });
 
