@@ -1,1 +1,65 @@
-﻿{"orders":[]}
+{
+  "orders": [
+    {
+      "sessionId": "k1Jxf5blLh0r",
+      "savedAt": "2026-08-19T14:54:19.491Z",
+      "startedAt": "2026-08-19T14:49:37.467Z",
+      "endedAt": "2026-08-19T14:54:19.491Z",
+      "status": "active",
+      "contact": {
+        "name": "Syed Maharaj Ur Rahman",
+        "phone": "9618734357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "0CMyZQGM",
+            "itemId": "burrito_classic",
+            "itemName": "Classic Burrito",
+            "quantity": 1,
+            "unitPrice": 7.5,
+            "chosen": [
+              {
+                "groupName": "Protein",
+                "optionName": "Grilled chicken",
+                "nested": []
+              }
+            ],
+            "lineTotal": 7.5
+          },
+          {
+            "cartItemId": "pDUlQhOt",
+            "itemId": "drink_cola",
+            "itemName": "Cola",
+            "quantity": 1,
+            "unitPrice": 2,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Regular",
+                "nested": []
+              }
+            ],
+            "lineTotal": 2
+          }
+        ],
+        "total": 9.5,
+        "placedAt": "2026-08-19T14:53:56.644Z"
+      },
+      "metrics": {
+        "turns": 7,
+        "totalInputTokens": 33687,
+        "totalOutputTokens": 1172,
+        "turnLatenciesMs": [
+          626,
+          1423,
+          817,
+          780,
+          1846,
+          33691,
+          20200
+        ]
+      }
+    }
+  ]
+}

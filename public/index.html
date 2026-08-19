@@ -493,7 +493,7 @@
             <div id="chatLog">
                 <div class="empty-state" id="emptyState">
                     <span class="icon">🎙️</span>
-                    <span>Press the button below and start speaking your order</span>
+                    <span>Start the call and speak naturally</span>
                 </div>
             </div>
             <div class="controls">
@@ -521,6 +521,8 @@
     <audio id="agentAudio" style="display:none"></audio>
     <script>
         let sessionId = null, mediaRecorder = null, audioChunks = [], isRecording = false, isBusy = false;
+        let callActive = false, stoppingCall = false, audioStream = null, audioContext = null, analyser = null, vadFrame = null;
+        let speechStartedAt = 0, lastSpeechAt = 0;
         const recordBtn = document.getElementById('recordBtn'), btnIcon = document.getElementById('btnIcon'), btnLabel = document.getElementById('btnLabel'), waveEl = document.getElementById('waveEl'), spinnerEl = document.getElementById('spinner'), statusText = document.getElementById('statusText'), chatLog = document.getElementById('chatLog'), emptyState = document.getElementById('emptyState'), cartTotal = document.getElementById('cartTotal'), cartItems = document.getElementById('cartItems'), cartEmpty = document.getElementById('cartEmpty'), orderBanner = document.getElementById('orderBanner'), agentAudio = document.getElementById('agentAudio'), sessionBadge = document.getElementById('sessionBadge');
         function setStatus(msg, cls) { statusText.textContent = msg; statusText.className = cls ? cls : ''; }
         function appendMessage(text, sender) {
@@ -549,9 +551,9 @@
         }
         function setBtnState(state) {
             recordBtn.disabled = false; waveEl.classList.remove('active'); spinnerEl.style.display = 'none'; recordBtn.classList.remove('recording'); btnIcon.style.display = 'inline';
-            if (state === 'ready') { btnIcon.textContent = '🎙️'; btnLabel.textContent = 'Tap to Speak'; }
-            else if (state === 'recording') { btnIcon.textContent = '⏹️'; btnLabel.textContent = 'Stop Recording'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
-            else if (state === 'processing') { btnIcon.style.display = 'none'; btnLabel.textContent = 'Processing…'; spinnerEl.style.display = 'inline-block'; recordBtn.disabled = true; }
+            if (state === 'ready') { btnIcon.textContent = '📞'; btnLabel.textContent = 'Start Call'; }
+            else if (state === 'recording') { btnIcon.textContent = '📵'; btnLabel.textContent = 'End Call'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
+            else if (state === 'processing') { btnIcon.textContent = '📵'; btnLabel.textContent = 'End Call'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
             else if (state === 'loading') { btnIcon.textContent = '⏳'; btnLabel.textContent = 'Loading…'; recordBtn.disabled = true; }
             else if (state === 'done') { btnIcon.textContent = '✅'; btnLabel.textContent = 'Order Complete'; recordBtn.disabled = true; }
         }
@@ -564,20 +566,7 @@
                 sessionBadge.textContent = 'Session: ' + sessionId.substring(0, 8) + '…'; sessionBadge.style.display = 'block';
                 setStatus('Connecting…', '');
 
-                // Play welcome greeting automatically (like a real phone call)
-                try {
-                    setStatus('Connecting your call…', 'processing');
-                    const greetRes = await fetch('/api/greet', { method: 'POST' });
-                    if (greetRes.ok) {
-                        const greetData = await greetRes.json();
-                        appendMessage(greetData.text, 'agent');
-                        await playBase64Audio(greetData.audioBase64);
-                    }
-                } catch (greetErr) {
-                    console.warn('Greeting failed (non-fatal):', greetErr);
-                }
-
-                setStatus('Ready — press the button and speak', 'ready');
+                setStatus('Ready to start your call', 'ready');
                 setBtnState('ready');
             } catch (err) { setStatus('❌ Could not connect to server', ''); console.error(err); }
         }
@@ -586,33 +575,61 @@
             for (const t of types) { if (MediaRecorder.isTypeSupported(t)) return t; }
             return '';
         }
-        recordBtn.addEventListener('click', async function () {
-            if (isBusy) return;
-            if (!isRecording) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        audio: {
-                            noiseSuppression: true,
-                            echoCancellation: true,
-                            autoGainControl: true,
-                            channelCount: 1
-                        }
-                    });
-                    audioChunks = []; const mimeType = getSupportedMimeType();
-                    mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
-                    mediaRecorder.ondataavailable = function (e) { if (e.data.size > 0) audioChunks.push(e.data); };
-                    mediaRecorder.onstop = async function () { stream.getTracks().forEach(t => t.stop()); await sendAudio(); };
-                    mediaRecorder.start(100); isRecording = true; setBtnState('recording'); setStatus('Listening… speak your order', 'listening');
-                } catch (err) { alert('Microphone access is required. Please allow microphone in your browser.'); console.error(err); }
-            } else { isRecording = false; mediaRecorder.stop(); }
-        });
-        async function sendAudio() {
-            if (audioChunks.length === 0) { setBtnState('ready'); setStatus('No audio captured. Try again.', ''); return; }
+        async function startCall() {
+            try {
+                stoppingCall = false; callActive = true;
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: { noiseSuppression: true, echoCancellation: true, autoGainControl: true, channelCount: 1 } });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = 0.75;
+                audioContext.createMediaStreamSource(audioStream).connect(analyser);
+                setBtnState('recording'); setStatus('Connecting your call…', 'processing');
+                const greetRes = await fetch('/api/greet', { method: 'POST' });
+                if (!callActive) return;
+                if (greetRes.ok) { const greetData = await greetRes.json(); appendMessage(greetData.text, 'agent'); await playBase64Audio(greetData.audioBase64); }
+                setStatus('Listening… speak naturally', 'listening');
+                monitorVoice();
+            } catch (err) { await endCall(); setStatus('❌ Microphone access is required', ''); console.error(err); }
+        }
+        async function endCall() {
+            stoppingCall = true; callActive = false; isBusy = false;
+            if (vadFrame) cancelAnimationFrame(vadFrame); vadFrame = null;
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+            mediaRecorder = null; audioChunks = [];
+            if (agentAudio) { agentAudio.pause(); agentAudio.removeAttribute('src'); }
+            if (audioStream) audioStream.getTracks().forEach(function (track) { track.stop(); });
+            audioStream = null;
+            if (audioContext) await audioContext.close().catch(function () {});
+            audioContext = null; analyser = null;
+            if (sessionId) fetch('/api/end/' + sessionId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ended' }) }).catch(function () {});
+            if (!orderBanner.style.display || orderBanner.style.display === 'none') { setBtnState('ready'); setStatus('Call ended', ''); }
+        }
+        function monitorVoice() {
+            if (!callActive || !analyser) return;
+            const samples = new Uint8Array(analyser.fftSize); analyser.getByteTimeDomainData(samples);
+            let sum = 0; for (let i = 0; i < samples.length; i++) { const value = (samples[i] - 128) / 128; sum += value * value; }
+            const volume = Math.sqrt(sum / samples.length), now = Date.now(), speaking = volume > 0.035;
+            if (speaking) {
+                lastSpeechAt = now;
+                if (!mediaRecorder && !isBusy) startUtterance();
+            } else if (mediaRecorder && now - lastSpeechAt > 900 && now - speechStartedAt > 450) {
+                mediaRecorder.stop();
+            }
+            vadFrame = requestAnimationFrame(monitorVoice);
+        }
+        function startUtterance() {
+            if (!callActive || isBusy) return;
+            audioChunks = []; speechStartedAt = Date.now(); lastSpeechAt = speechStartedAt;
+            const mimeType = getSupportedMimeType(); mediaRecorder = new MediaRecorder(audioStream, mimeType ? { mimeType } : {});
+            mediaRecorder.ondataavailable = function (event) { if (event.data.size > 0) audioChunks.push(event.data); };
+            mediaRecorder.onstop = function () { const chunks = audioChunks; audioChunks = []; mediaRecorder = null; sendAudio(chunks, mimeType || 'audio/webm'); };
+            mediaRecorder.start(100); setStatus('Listening…', 'listening');
+        }
+        async function sendAudio(chunks, mimeType) {
+            if (stoppingCall || chunks.length === 0) return;
             isBusy = true; setBtnState('processing'); setStatus('Transcribing & thinking…', 'processing');
             try {
-                const mimeType = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
                 const ext = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('mp4') ? 'mp4' : 'webm';
-                const blob = new Blob(audioChunks, { type: mimeType });
+                const blob = new Blob(chunks, { type: mimeType });
                 const form = new FormData(); form.append('sessionId', sessionId); form.append('audio', blob, 'recording.' + ext);
                 const res = await fetch('/api/voice-chat', { method: 'POST', body: form });
                 if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || e.error || 'Server error ' + res.status); }
@@ -621,11 +638,12 @@
                 if (data.replyText) appendMessage(data.replyText, 'agent');
                 if (data.cart) updateCart(data.cart);
                 if (data.audioBase64) await playBase64Audio(data.audioBase64);
-                if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { setBtnState('done'); setStatus('Order placed! 🎉', 'ready'); }
-                else { setBtnState('ready'); setStatus('Ready — press the button and speak', 'ready'); }
-            } catch (err) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); setBtnState('ready'); }
-            finally { isBusy = false; audioChunks = []; }
+                if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { setBtnState('done'); setStatus('Order placed! 🎉', 'ready'); callActive = false; }
+                else if (callActive) { setBtnState('recording'); setStatus('Listening… speak naturally', 'listening'); }
+            } catch (err) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); }
+            finally { isBusy = false; }
         }
+        recordBtn.addEventListener('click', function () { if (callActive) endCall(); else startCall(); });
         function playBase64Audio(base64) {
             return new Promise(function (resolve) {
                 const byteChars = atob(base64), byteNums = new Uint8Array(byteChars.length);
