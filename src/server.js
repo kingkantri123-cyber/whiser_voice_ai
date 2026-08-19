@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { sessionStore } from "./sessionStore.js";
 import { runTurn } from "./agent.js";
 import { transcribeAudio, generateSpeech } from "./groqServices.js";
+import { preprocessAudio } from "./audioProcessing.js";
 import { saveOrder, getAllOrders } from "./db.js";
 
 const app = express();
@@ -63,8 +64,20 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
   }
 
   try {
-    // Step 1: STT via Groq Whisper
-    const userText = await transcribeAudio(audioFile.buffer, audioFile.mimetype);
+    // Step 1a: backend audio normalization (highpass, loudness-normalize,
+    // trim silence, downmix to 16kHz mono). Falls back to the raw upload
+    // if ffmpeg chokes on a malformed clip, so one bad file can't 500 the call.
+    let sttBuffer = audioFile.buffer;
+    let sttMime = audioFile.mimetype;
+    try {
+      sttBuffer = await preprocessAudio(audioFile.buffer);
+      sttMime = "audio/wav";
+    } catch (preprocessErr) {
+      console.warn("Audio preprocessing failed, using raw upload:", preprocessErr.message);
+    }
+
+    // Step 1b: STT via Groq Whisper
+    const userText = await transcribeAudio(sttBuffer, sttMime);
 
     // Step 2: Agent processing via Gemini
     const agentResult = await runTurn(session, userText);

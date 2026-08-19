@@ -590,7 +590,14 @@
             if (isBusy) return;
             if (!isRecording) {
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            noiseSuppression: true,
+                            echoCancellation: true,
+                            autoGainControl: true,
+                            channelCount: 1
+                        }
+                    });
                     audioChunks = []; const mimeType = getSupportedMimeType();
                     mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
                     mediaRecorder.ondataavailable = function (e) { if (e.data.size > 0) audioChunks.push(e.data); };
