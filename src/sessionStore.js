@@ -1,4 +1,5 @@
 import { Cart } from "./cart.js";
+import { UsageMonitor } from "./usageMonitor.js";
 
 /**
  * One session per call. Never share a cart across sessions.
@@ -16,6 +17,7 @@ class SessionStore {
       cart: new Cart(),
       history: [], // Gemini "contents" array (role: user/model, parts)
       contact: null, // { name?, phone?, email? } once caller provides it
+      usageMonitor: new UsageMonitor(sessionId),
       startedAt: new Date().toISOString(),
       endedAt: null,
       status: "active", // active | ended | abandoned

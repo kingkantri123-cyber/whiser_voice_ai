@@ -7,6 +7,8 @@ import { runTurn } from "./agent.js";
 import { transcribeAudio, generateSpeech } from "./groqServices.js";
 import { preprocessAudio } from "./audioProcessing.js";
 import { saveOrder, getAllOrders } from "./db.js";
+import { saveCallUsage, getAllCallUsage } from "./tokenUsageDb.js";
+import { aggregateUsage, estimateCost, scaleEstimate } from "./costEstimator.js";
 
 const app = express();
 app.use(express.json());
@@ -77,14 +79,14 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
     }
 
     // Step 1b: STT via Groq Whisper
-    const userText = await transcribeAudio(sttBuffer, sttMime);
+    const userText = await transcribeAudio(sttBuffer, sttMime, session.usageMonitor);
 
     // Step 2: Agent processing via Gemini
     const agentResult = await runTurn(session, userText);
 
     // Step 3: TTS via Groq Orpheus
     console.log(`Generating speech for text: "${agentResult.reply}"`);
-    const audioBuffer = await generateSpeech(agentResult.reply);
+    const audioBuffer = await generateSpeech(agentResult.reply, "hannah", session.usageMonitor);
     console.log(`Speech generated successfully. Buffer size: ${audioBuffer.length} bytes`);
 
     // Persist order to JSON DB if it was just placed this turn
@@ -102,6 +104,7 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
       toolCalls: agentResult.toolCalls,
       cart: agentResult.cart,
       metrics: agentResult.metrics,
+      usage: session.usageMonitor.toJSON(),
       sessionStatus: agentResult.sessionStatus,
     });
   } catch (err) {
@@ -150,10 +153,44 @@ app.get("/api/orders", (_req, res) => {
   res.json({ orders });
 });
 
+app.get("/api/token-usage", (_req, res) => {
+  res.json({ calls: getAllCallUsage() });
+});
+
+app.get("/api/usage-dashboard", (_req, res) => {
+  const allCalls = getAllCallUsage();
+  const from = Date.parse(_req.query.from || "");
+  const to = Date.parse(_req.query.to || "");
+  const calls = allCalls.filter((call) => {
+    const timestamp = Date.parse(call.endedAt || call.startedAt || call.savedAt);
+    return (!_req.query.sessionId || call.sessionId === _req.query.sessionId) &&
+      (!Number.isFinite(from) || timestamp >= from) && (!Number.isFinite(to) || timestamp < to);
+  });
+  const summary = aggregateUsage(calls);
+  const firstCall = calls.map((call) => Date.parse(call.startedAt)).filter(Number.isFinite).sort()[0];
+  const daysObserved = firstCall ? Math.max(1, (Date.now() - firstCall) / 86_400_000) : 1;
+  const dailyCost = estimateCost(summary);
+  res.json({
+    usage: summary,
+    pricing: dailyCost.rates,
+    estimatedCost: {
+      observedWindow: dailyCost,
+      daily: dailyCost.total == null ? null : dailyCost.total / daysObserved,
+      weekly: scaleEstimate(dailyCost.total == null ? null : dailyCost.total / daysObserved, 7),
+      monthly: scaleEstimate(dailyCost.total == null ? null : dailyCost.total / daysObserved, 30),
+      yearly: scaleEstimate(dailyCost.total == null ? null : dailyCost.total / daysObserved, 365),
+    },
+    calls: calls.length,
+    daysObserved,
+  });
+});
+
 app.post("/api/end/:sessionId", (req, res) => {
   const session = sessionStore.end(req.params.sessionId, req.body?.status || "ended");
   if (!session) return res.status(404).json({ error: "Unknown session" });
-  res.json({ sessionId: session.id, status: session.status });
+  const usage = saveCallUsage(session);
+  session.usageMonitor.printDashboard();
+  res.json({ sessionId: session.id, status: session.status, usage });
 });
 
 const PORT = process.env.PORT || 3000;

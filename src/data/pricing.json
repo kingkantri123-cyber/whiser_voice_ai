@@ -1,0 +1,16 @@
+{
+  "notes": "Configure future paid pricing here. null means not verified and produces no cost estimate.",
+  "stt": {
+    "model": "future-paid-stt-model",
+    "pricePerMinute": null
+  },
+  "llm": {
+    "model": "future-paid-llm-model",
+    "pricePerMillionInputTokens": null,
+    "pricePerMillionOutputTokens": null
+  },
+  "tts": {
+    "model": "future-paid-tts-model",
+    "pricePerMillionCharacters": null
+  }
+}

@@ -21,6 +21,25 @@ fallback.
 
 Server runs on `http://localhost:3000`.
 
+## Usage and future cost estimates
+
+Raw provider usage is saved per ended session in `src/data/token-usage.json`.
+Whisper is measured in audio seconds, the conversational model uses API
+reported input/output tokens, and TTS is measured in characters sent. Failed
+Orpheus attempts and Deepgram fallback attempts are stored separately.
+
+Configure future paid rates in `src/data/pricing.json`. Leave unverified rates
+as `null`; the cost estimator will return `null` instead of inventing pricing.
+
+```text
+GET /api/token-usage
+GET /api/usage-dashboard
+```
+
+The dashboard endpoint returns aggregate usage and estimated daily, weekly,
+monthly, and yearly costs. A compact dashboard is also printed when a call
+ends.
+
 ## Try it
 
 ```bash

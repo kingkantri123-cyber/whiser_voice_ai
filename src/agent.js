@@ -1,5 +1,6 @@
 import Groq from "groq-sdk";
 import { toolDeclarations, executeTool } from "./tools.js";
+import { elapsedMs, startTimer } from "./usageMonitor.js";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -56,12 +57,31 @@ export async function runTurn(session, userText) {
   const startedAt = Date.now();
 
   for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-    const response = await groq.chat.completions.create({
-      model: MODEL,
-      messages: session.history,
-      tools: toGroqTools(),
-      tool_choice: "auto",
-    });
+    const requestStartedAt = startTimer();
+    let response;
+    try {
+      response = await groq.chat.completions.create({
+        model: MODEL,
+        messages: session.history,
+        tools: toGroqTools(),
+        tool_choice: "auto",
+      });
+      session.usageMonitor?.recordLlm({
+        model: MODEL,
+        usage: response.usage,
+        latency: elapsedMs(requestStartedAt),
+        status: "success",
+        response,
+      });
+    } catch (error) {
+      session.usageMonitor?.recordLlm({
+        model: MODEL,
+        latency: elapsedMs(requestStartedAt),
+        status: "failure",
+        error: error.message,
+      });
+      throw error;
+    }
 
     if (response.usage) {
       inputTokens += response.usage.prompt_tokens || 0;
@@ -80,13 +100,21 @@ export async function runTurn(session, userText) {
       session.metrics.turns += 1;
       session.metrics.totalInputTokens += inputTokens;
       session.metrics.totalOutputTokens += outputTokens;
+      session.metrics.totalTokens = session.metrics.totalInputTokens + session.metrics.totalOutputTokens;
+      session.metrics.model = MODEL;
       session.metrics.turnLatenciesMs.push(elapsedMs);
 
       return {
         reply: text,
         toolCalls: toolCallLog,
         cart: session.cart.view(),
-        metrics: { elapsedMs, inputTokens, outputTokens },
+        metrics: {
+          elapsedMs,
+          inputTokens,
+          outputTokens,
+          totalTokens: inputTokens + outputTokens,
+          model: MODEL,
+        },
         sessionStatus: session.status,
       };
     }
@@ -113,12 +141,22 @@ export async function runTurn(session, userText) {
 
   // Safety valve: too many tool rounds without a final text reply.
   session.metrics.turns += 1;
+  session.metrics.totalInputTokens += inputTokens;
+  session.metrics.totalOutputTokens += outputTokens;
+  session.metrics.totalTokens = session.metrics.totalInputTokens + session.metrics.totalOutputTokens;
+  session.metrics.model = MODEL;
   return {
     reply:
       "Sorry, I'm having trouble completing that -- could you repeat what you'd like?",
     toolCalls: toolCallLog,
     cart: session.cart.view(),
-    metrics: { elapsedMs: Date.now() - startedAt, inputTokens, outputTokens },
+    metrics: {
+      elapsedMs: Date.now() - startedAt,
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
+      model: MODEL,
+    },
     sessionStatus: session.status,
     warning: "MAX_TOOL_ROUNDS exceeded",
   };

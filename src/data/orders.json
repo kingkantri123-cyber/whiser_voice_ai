@@ -177,6 +177,57 @@
           7168
         ]
       }
+    },
+    {
+      "sessionId": "0rDCZ5TiAxE_",
+      "savedAt": "2026-08-20T14:26:27.482Z",
+      "startedAt": "2026-08-20T14:23:36.692Z",
+      "endedAt": "2026-08-20T14:26:03.239Z",
+      "status": "ended",
+      "contact": {
+        "name": "Sayyid Mehraj ul Rahman",
+        "phone": "9618734357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "BVilkd3k",
+            "itemId": "pz_pepperoni",
+            "itemName": "Pepperoni Pizza",
+            "quantity": 1,
+            "unitPrice": 13.5,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Medium (12\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 13.5
+          }
+        ],
+        "total": 13.5,
+        "placedAt": "2026-08-20T14:25:45.396Z"
+      },
+      "metrics": {
+        "turns": 5,
+        "totalInputTokens": 23918,
+        "totalOutputTokens": 812,
+        "turnLatenciesMs": [
+          1802,
+          1051,
+          1423,
+          1067,
+          39912
+        ],
+        "totalTokens": 24730,
+        "model": "openai/gpt-oss-120b"
+      }
     }
   ]
 }
