@@ -15,6 +15,10 @@ cp .env.example .env
 npm start
 ```
 
+Voice responses use Canopy Orpheus through Groq first, then fall back to
+Deepgram Aura if Canopy fails. Set `DEEPGRAM_API_KEY` in `.env` to enable the
+fallback.
+
 Server runs on `http://localhost:3000`.
 
 ## Try it
