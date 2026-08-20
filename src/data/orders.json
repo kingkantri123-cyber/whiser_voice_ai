@@ -60,6 +60,123 @@
           20200
         ]
       }
+    },
+    {
+      "sessionId": "6p71LlkQmaKY",
+      "savedAt": "2026-08-20T10:03:43.738Z",
+      "startedAt": "2026-08-20T10:00:31.016Z",
+      "endedAt": "2026-08-20T10:03:43.738Z",
+      "status": "active",
+      "contact": {
+        "name": "Syed Mehraj Ur-Rahman",
+        "phone": "9618734357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "v-0wIuGo",
+            "itemId": "pz_pepperoni",
+            "itemName": "Pepperoni Pizza",
+            "quantity": 1,
+            "unitPrice": 10.5,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Small (10\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 10.5
+          },
+          {
+            "cartItemId": "6b1P1cxp",
+            "itemId": "drink_cola",
+            "itemName": "Cola",
+            "quantity": 1,
+            "unitPrice": 2,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Regular",
+                "nested": []
+              }
+            ],
+            "lineTotal": 2
+          }
+        ],
+        "total": 12.5,
+        "placedAt": "2026-08-20T10:03:18.673Z"
+      },
+      "metrics": {
+        "turns": 5,
+        "totalInputTokens": 27402,
+        "totalOutputTokens": 881,
+        "turnLatenciesMs": [
+          1206,
+          1946,
+          911,
+          14197,
+          40204
+        ]
+      }
+    },
+    {
+      "sessionId": "Ivw3LWhtNXcn",
+      "savedAt": "2026-08-20T10:12:16.656Z",
+      "startedAt": "2026-08-20T10:09:07.519Z",
+      "endedAt": "2026-08-20T10:12:16.656Z",
+      "status": "active",
+      "contact": {
+        "email": "mohammed.yahiyah555@gmail.com"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "iXAqK9Zs",
+            "itemId": "pz_margherita",
+            "itemName": "Margherita Pizza",
+            "quantity": 1,
+            "unitPrice": 9,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Small (10\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 9
+          }
+        ],
+        "total": 9,
+        "placedAt": "2026-08-20T10:12:07.950Z"
+      },
+      "metrics": {
+        "turns": 10,
+        "totalInputTokens": 37271,
+        "totalOutputTokens": 1063,
+        "turnLatenciesMs": [
+          615,
+          1165,
+          1820,
+          407,
+          1268,
+          1412,
+          3467,
+          621,
+          819,
+          7168
+        ]
+      }
     }
   ]
 }

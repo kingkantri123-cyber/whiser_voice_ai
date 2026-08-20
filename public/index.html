@@ -522,7 +522,9 @@
     <script>
         let sessionId = null, mediaRecorder = null, audioChunks = [], isRecording = false, isBusy = false;
         let callActive = false, stoppingCall = false, audioStream = null, audioContext = null, analyser = null, vadFrame = null;
-        let speechStartedAt = 0, lastSpeechAt = 0;
+        let speechStartedAt = 0, lastSpeechAt = 0, noiseFloor = 0.012, activeRequest = null;
+        let assistantSpeaking = false, playbackUrl = null, resolvePlayback = null, vadCalibratedAt = 0, turnGeneration = 0;
+        const SPEECH_START_MARGIN = 0.022, SPEECH_STOP_MARGIN = 0.012, SILENCE_MS = 850, MIN_SPEECH_MS = 450, MAX_UTTERANCE_MS = 15000;
         const recordBtn = document.getElementById('recordBtn'), btnIcon = document.getElementById('btnIcon'), btnLabel = document.getElementById('btnLabel'), waveEl = document.getElementById('waveEl'), spinnerEl = document.getElementById('spinner'), statusText = document.getElementById('statusText'), chatLog = document.getElementById('chatLog'), emptyState = document.getElementById('emptyState'), cartTotal = document.getElementById('cartTotal'), cartItems = document.getElementById('cartItems'), cartEmpty = document.getElementById('cartEmpty'), orderBanner = document.getElementById('orderBanner'), agentAudio = document.getElementById('agentAudio'), sessionBadge = document.getElementById('sessionBadge');
         function setStatus(msg, cls) { statusText.textContent = msg; statusText.className = cls ? cls : ''; }
         function appendMessage(text, sender) {
@@ -583,6 +585,7 @@
                 analyser = audioContext.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = 0.75;
                 audioContext.createMediaStreamSource(audioStream).connect(analyser);
                 setBtnState('recording'); setStatus('Connecting your call…', 'processing');
+                vadCalibratedAt = Date.now();
                 const greetRes = await fetch('/api/greet', { method: 'POST' });
                 if (!callActive) return;
                 if (greetRes.ok) { const greetData = await greetRes.json(); appendMessage(greetData.text, 'agent'); await playBase64Audio(greetData.audioBase64); }
@@ -591,11 +594,12 @@
             } catch (err) { await endCall(); setStatus('❌ Microphone access is required', ''); console.error(err); }
         }
         async function endCall() {
-            stoppingCall = true; callActive = false; isBusy = false;
+            stoppingCall = true; callActive = false; isBusy = false; turnGeneration++;
+            if (activeRequest) { activeRequest.abort(); activeRequest = null; }
             if (vadFrame) cancelAnimationFrame(vadFrame); vadFrame = null;
             if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
             mediaRecorder = null; audioChunks = [];
-            if (agentAudio) { agentAudio.pause(); agentAudio.removeAttribute('src'); }
+            stopAssistantAudio();
             if (audioStream) audioStream.getTracks().forEach(function (track) { track.stop(); });
             audioStream = null;
             if (audioContext) await audioContext.close().catch(function () {});
@@ -607,17 +611,24 @@
             if (!callActive || !analyser) return;
             const samples = new Uint8Array(analyser.fftSize); analyser.getByteTimeDomainData(samples);
             let sum = 0; for (let i = 0; i < samples.length; i++) { const value = (samples[i] - 128) / 128; sum += value * value; }
-            const volume = Math.sqrt(sum / samples.length), now = Date.now(), speaking = volume > 0.035;
+            const volume = Math.sqrt(sum / samples.length), now = Date.now();
+            if (now - vadCalibratedAt < 1000) noiseFloor = Math.max(noiseFloor * 0.9, volume);
+            else noiseFloor = noiseFloor * 0.995 + Math.min(volume, 0.08) * 0.005;
+            const speaking = volume > noiseFloor + SPEECH_START_MARGIN;
+            const quiet = volume < noiseFloor + SPEECH_STOP_MARGIN;
             if (speaking) {
                 lastSpeechAt = now;
+                if (assistantSpeaking) handleBargeIn();
                 if (!mediaRecorder && !isBusy) startUtterance();
-            } else if (mediaRecorder && now - lastSpeechAt > 900 && now - speechStartedAt > 450) {
+            } else if (mediaRecorder && quiet && now - lastSpeechAt > SILENCE_MS && now - speechStartedAt > MIN_SPEECH_MS) {
+                mediaRecorder.stop();
+            } else if (mediaRecorder && now - speechStartedAt > MAX_UTTERANCE_MS) {
                 mediaRecorder.stop();
             }
             vadFrame = requestAnimationFrame(monitorVoice);
         }
         function startUtterance() {
-            if (!callActive || isBusy) return;
+            if (!callActive || isBusy || mediaRecorder) return;
             audioChunks = []; speechStartedAt = Date.now(); lastSpeechAt = speechStartedAt;
             const mimeType = getSupportedMimeType(); mediaRecorder = new MediaRecorder(audioStream, mimeType ? { mimeType } : {});
             mediaRecorder.ondataavailable = function (event) { if (event.data.size > 0) audioChunks.push(event.data); };
@@ -627,21 +638,26 @@
         async function sendAudio(chunks, mimeType) {
             if (stoppingCall || chunks.length === 0) return;
             isBusy = true; setBtnState('processing'); setStatus('Transcribing & thinking…', 'processing');
+            const requestController = new AbortController(); activeRequest = requestController;
+            const generation = ++turnGeneration;
             try {
                 const ext = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('mp4') ? 'mp4' : 'webm';
                 const blob = new Blob(chunks, { type: mimeType });
                 const form = new FormData(); form.append('sessionId', sessionId); form.append('audio', blob, 'recording.' + ext);
-                const res = await fetch('/api/voice-chat', { method: 'POST', body: form });
+                const res = await fetch('/api/voice-chat', { method: 'POST', body: form, signal: requestController.signal });
                 if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || e.error || 'Server error ' + res.status); }
                 const data = await res.json();
                 if (data.userText) appendMessage(data.userText, 'user');
                 if (data.replyText) appendMessage(data.replyText, 'agent');
                 if (data.cart) updateCart(data.cart);
-                if (data.audioBase64) await playBase64Audio(data.audioBase64);
+                if (generation !== turnGeneration) return;
+                if (data.audioBase64 && callActive) await playBase64Audio(data.audioBase64);
+                if (generation !== turnGeneration) return;
                 if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { setBtnState('done'); setStatus('Order placed! 🎉', 'ready'); callActive = false; }
                 else if (callActive) { setBtnState('recording'); setStatus('Listening… speak naturally', 'listening'); }
-            } catch (err) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); }
-            finally { isBusy = false; }
+            } catch (err) {
+                if (err.name !== 'AbortError' && callActive) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); }
+            } finally { if (activeRequest === requestController) activeRequest = null; isBusy = false; }
         }
         recordBtn.addEventListener('click', function () { if (callActive) endCall(); else startCall(); });
         function playBase64Audio(base64) {
@@ -649,11 +665,28 @@
                 const byteChars = atob(base64), byteNums = new Uint8Array(byteChars.length);
                 for (let i = 0; i < byteChars.length; i++)byteNums[i] = byteChars.charCodeAt(i);
                 const blob = new Blob([byteNums], { type: 'audio/wav' }), url = URL.createObjectURL(blob);
-                agentAudio.src = url;
-                agentAudio.onended = function () { URL.revokeObjectURL(url); resolve(); };
-                agentAudio.onerror = function () { URL.revokeObjectURL(url); resolve(); };
-                agentAudio.play().catch(resolve);
+                playbackUrl = url; resolvePlayback = resolve; assistantSpeaking = true; agentAudio.src = url;
+                agentAudio.onended = function () { finishPlayback(); };
+                agentAudio.onerror = function () { finishPlayback(); };
+                agentAudio.play().catch(finishPlayback);
             });
+        }
+        function finishPlayback() {
+            assistantSpeaking = false;
+            if (playbackUrl) { URL.revokeObjectURL(playbackUrl); playbackUrl = null; }
+            const resolve = resolvePlayback; resolvePlayback = null; if (resolve) resolve();
+        }
+        function stopAssistantAudio() {
+            if (agentAudio) { agentAudio.pause(); agentAudio.currentTime = 0; }
+            finishPlayback();
+        }
+        function handleBargeIn() {
+            if (!assistantSpeaking) return;
+            turnGeneration++;
+            stopAssistantAudio();
+            if (activeRequest) { activeRequest.abort(); activeRequest = null; }
+            isBusy = false;
+            setStatus('Listening…', 'listening');
         }
         initSession();
     </script>
