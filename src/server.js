@@ -154,10 +154,12 @@ app.get("/api/orders", (_req, res) => {
 });
 
 app.get("/api/token-usage", (_req, res) => {
+  res.set("Cache-Control", "no-store");
   res.json({ calls: getAllCallUsage() });
 });
 
 app.get("/api/usage-dashboard", (_req, res) => {
+  res.set("Cache-Control", "no-store");
   const allCalls = getAllCallUsage();
   const from = Date.parse(_req.query.from || "");
   const to = Date.parse(_req.query.to || "");
@@ -189,7 +191,6 @@ app.post("/api/end/:sessionId", (req, res) => {
   const session = sessionStore.end(req.params.sessionId, req.body?.status || "ended");
   if (!session) return res.status(404).json({ error: "Unknown session" });
   const usage = saveCallUsage(session);
-  session.usageMonitor.printDashboard();
   res.json({ sessionId: session.id, status: session.status, usage });
 });
 

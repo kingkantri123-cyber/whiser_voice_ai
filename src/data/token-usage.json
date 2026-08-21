@@ -1,578 +1,2803 @@
 {
   "calls": [
     {
-      "sessionId": "_tZei4BUS7JH",
-      "startedAt": "2026-08-20T13:13:45.353Z",
-      "endedAt": "2026-08-20T13:15:06.987Z",
+      "sessionId": "asOqmhuCQjk2",
+      "startedAt": "2026-08-21T12:37:45.904Z",
+      "endedAt": "2026-08-21T12:39:33.186Z",
       "status": "ended",
       "usage": {
         "metrics": {
-          "turns": 5,
-          "totalInputTokens": 14227,
-          "totalOutputTokens": 726,
+          "turns": 4,
+          "totalInputTokens": 13413,
+          "totalOutputTokens": 694,
           "turnLatenciesMs": [
-            600,
-            1025,
-            1444,
-            1945,
-            7766
+            1111,
+            1667,
+            659,
+            14104
           ],
-          "totalTokens": 14953,
-          "model": "openai/gpt-oss-120b"
+          "totalTokens": 14107,
+          "model": "openai/gpt-oss-120b",
+          "context": {
+            "fullHistoryMessageCount": 18,
+            "contextMessageCount": 18,
+            "recentMessagesIncluded": 10,
+            "olderMessagesSummarized": 0,
+            "toolMessagesIncluded": 5,
+            "estimatedContextTokens": 1772,
+            "summaryTokens": 0,
+            "recentContextTokens": 936,
+            "currentRequestTokens": 21,
+            "contextLimit": 3500,
+            "toolSchemaTokens": 989,
+            "context": {
+              "messageCount": 18,
+              "systemMessages": 1,
+              "userMessages": 4,
+              "assistantMessages": 8,
+              "toolCalls": 5,
+              "toolResults": 5,
+              "estimatedTokens": 1772,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 936,
+              "recentMessageTokens": 936,
+              "toolTokens": 1106,
+              "currentRequestTokens": 21,
+              "fullHistoryMessageCount": 18,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 989,
+              "estimatedFullRequestTokens": 2761
+            }
+          }
         },
-        "sessionId": "_tZei4BUS7JH",
+        "sessionId": "asOqmhuCQjk2",
         "summary": {
           "stt": {
             "model": "whisper-large-v3-turbo",
-            "requests": 6,
-            "audioSeconds": 805306.368,
-            "audioMinutes": 13421.7728,
-            "audioHours": 223.69621333333333
+            "requests": 4,
+            "audioSeconds": 536870.912,
+            "audioMinutes": 8947.848533333334,
+            "audioHours": 149.13080888888888
           },
           "llm": {
             "models": [
               "openai/gpt-oss-120b"
             ],
-            "requests": 9,
-            "inputTokens": 16724,
-            "outputTokens": 1104,
-            "totalTokens": 17828
+            "requests": [
+              {
+                "timestamp": "2026-08-21T12:38:01.492Z",
+                "type": "llm",
+                "requestId": "71803661-cb57-49e9-b5a1-41fad0aa2d1c",
+                "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 745,
+                "outputTokens": 40,
+                "totalTokens": 785,
+                "latencyMs": 426.25,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.281327044,
+                  "prompt_tokens": 745,
+                  "prompt_time": 0.015702187,
+                  "completion_tokens": 40,
+                  "completion_time": 0.083605806,
+                  "total_tokens": 785,
+                  "total_time": 0.099307993,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 512
+                  },
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 14
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 2,
+                  "systemMessages": 1,
+                  "userMessages": 1,
+                  "assistantMessages": 0,
+                  "toolCalls": 0,
+                  "toolResults": 0,
+                  "estimatedTokens": 344,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 0,
+                  "recentMessageTokens": 0,
+                  "toolTokens": 0,
+                  "currentRequestTokens": 15,
+                  "fullHistoryMessageCount": 2,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 902
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:02.177Z",
+                "type": "llm",
+                "requestId": "2182675b-4f26-4cd7-98db-787a240861b9",
+                "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 974,
+                "outputTokens": 95,
+                "totalTokens": 1069,
+                "latencyMs": 684.16,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.376149596,
+                  "prompt_tokens": 974,
+                  "prompt_time": 0.048538873,
+                  "completion_tokens": 95,
+                  "completion_time": 0.198404667,
+                  "total_tokens": 1069,
+                  "total_time": 0.24694354,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 28
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 4,
+                  "systemMessages": 1,
+                  "userMessages": 1,
+                  "assistantMessages": 1,
+                  "toolCalls": 1,
+                  "toolResults": 1,
+                  "estimatedTokens": 618,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 0,
+                  "recentMessageTokens": 0,
+                  "toolTokens": 274,
+                  "currentRequestTokens": 15,
+                  "fullHistoryMessageCount": 4,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1176
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:17.966Z",
+                "type": "llm",
+                "requestId": "856a6b44-794b-4186-a692-b58e8fb0d5e0",
+                "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1086,
+                "outputTokens": 60,
+                "totalTokens": 1146,
+                "latencyMs": 510.2,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.290665106,
+                  "prompt_tokens": 1086,
+                  "prompt_time": 0.048699471,
+                  "completion_tokens": 60,
+                  "completion_time": 0.126641555,
+                  "total_tokens": 1146,
+                  "total_time": 0.175341026,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 34
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 6,
+                  "systemMessages": 1,
+                  "userMessages": 2,
+                  "assistantMessages": 2,
+                  "toolCalls": 1,
+                  "toolResults": 1,
+                  "estimatedTokens": 733,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 384,
+                  "recentMessageTokens": 384,
+                  "toolTokens": 274,
+                  "currentRequestTokens": 20,
+                  "fullHistoryMessageCount": 6,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1291
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:19.123Z",
+                "type": "llm",
+                "requestId": "5fbd2d08-5714-47cb-82da-9deda46a7444",
+                "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1413,
+                "outputTokens": 85,
+                "totalTokens": 1498,
+                "latencyMs": 1156.6,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.865036508,
+                  "prompt_tokens": 1413,
+                  "prompt_time": 0.067808092,
+                  "completion_tokens": 85,
+                  "completion_time": 0.179174986,
+                  "total_tokens": 1498,
+                  "total_time": 0.246983078,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 45
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 8,
+                  "systemMessages": 1,
+                  "userMessages": 2,
+                  "assistantMessages": 3,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1079,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 384,
+                  "recentMessageTokens": 384,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 20,
+                  "fullHistoryMessageCount": 8,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1637
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:26.285Z",
+                "type": "llm",
+                "requestId": "708e6251-1a3e-4f54-834d-07834b90b5ea",
+                "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1507,
+                "outputTokens": 78,
+                "totalTokens": 1585,
+                "latencyMs": 659.06,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.370793009,
+                  "prompt_tokens": 1507,
+                  "prompt_time": 0.078740896,
+                  "completion_tokens": 78,
+                  "completion_time": 0.162206147,
+                  "total_tokens": 1585,
+                  "total_time": 0.240947043,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 38
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 10,
+                  "systemMessages": 1,
+                  "userMessages": 3,
+                  "assistantMessages": 4,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1180,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 841,
+                  "recentMessageTokens": 841,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 10,
+                  "fullHistoryMessageCount": 10,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1738
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:36.890Z",
+                "type": "llm",
+                "requestId": "330d33af-0234-43b5-b4b3-3955c923d1b8",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1603,
+                "outputTokens": 95,
+                "totalTokens": 1698,
+                "latencyMs": 486.36,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.158839065,
+                  "prompt_tokens": 1603,
+                  "prompt_time": 0.064357594,
+                  "completion_tokens": 95,
+                  "completion_time": 0.196544027,
+                  "total_tokens": 1698,
+                  "total_time": 0.260901621,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 73
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 12,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 5,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1286,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 12,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1844
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:37.659Z",
+                "type": "llm",
+                "requestId": "bdc49db4-5932-4cea-812b-5d4c18f5ab41",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1716,
+                "outputTokens": 85,
+                "totalTokens": 1801,
+                "latencyMs": 768.42,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.370014497,
+                  "prompt_tokens": 1716,
+                  "prompt_time": 0.170785741,
+                  "completion_tokens": 85,
+                  "completion_time": 0.17884747,
+                  "total_tokens": 1801,
+                  "total_time": 0.349633211,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 24
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 14,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 6,
+                  "toolCalls": 3,
+                  "toolResults": 3,
+                  "estimatedTokens": 1435,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 769,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 14,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1993
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:38.348Z",
+                "type": "llm",
+                "requestId": "4dfec8a8-2c0d-427b-ade6-62d8e8977b2f",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 3,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 2126,
+                "outputTokens": 52,
+                "totalTokens": 2178,
+                "latencyMs": 688.51,
+                "toolRound": 2,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.375726042,
+                  "prompt_tokens": 2126,
+                  "prompt_time": 0.104784923,
+                  "completion_tokens": 52,
+                  "completion_time": 0.108565588,
+                  "total_tokens": 2178,
+                  "total_time": 0.213350511,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 8
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 16,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 7,
+                  "toolCalls": 4,
+                  "toolResults": 4,
+                  "estimatedTokens": 1621,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 955,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 16,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 989,
+                  "estimatedFullRequestTokens": 2610
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:50.508Z",
+                "type": "llm",
+                "requestId": "6bd7ddac-c334-496b-8047-fdbc1ab17311",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 4,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 2243,
+                "outputTokens": 104,
+                "totalTokens": 2347,
+                "latencyMs": 12160.65,
+                "toolRound": 3,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.321615368,
+                  "prompt_tokens": 2243,
+                  "prompt_time": 0.383262975,
+                  "completion_tokens": 104,
+                  "completion_time": 0.215821243,
+                  "total_tokens": 2347,
+                  "total_time": 0.599084218,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 20
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 18,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 8,
+                  "toolCalls": 5,
+                  "toolResults": 5,
+                  "estimatedTokens": 1772,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 1106,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 18,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 989,
+                  "estimatedFullRequestTokens": 2761
+                },
+                "rateLimitHeaders": null
+              }
+            ],
+            "inputTokens": 13413,
+            "outputTokens": 694,
+            "totalTokens": 14107
           },
           "tts": {
             "primaryModel": "canopylabs/orpheus-v1-english",
-            "primaryRequests": 5,
-            "primaryCharacters": 836,
+            "primaryRequests": 4,
+            "primaryCharacters": 682,
             "fallbackModel": "aura-asteria-en",
-            "fallbackRequests": 5,
-            "fallbackCharacters": 836
+            "fallbackRequests": 3,
+            "fallbackCharacters": 433
           }
         },
+        "llm": {
+          "requests": [
+            {
+              "timestamp": "2026-08-21T12:38:01.492Z",
+              "type": "llm",
+              "requestId": "71803661-cb57-49e9-b5a1-41fad0aa2d1c",
+              "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+              "requestIndex": 1,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 745,
+              "outputTokens": 40,
+              "totalTokens": 785,
+              "latencyMs": 426.25,
+              "toolRound": 0,
+              "isToolRound": false,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.281327044,
+                "prompt_tokens": 745,
+                "prompt_time": 0.015702187,
+                "completion_tokens": 40,
+                "completion_time": 0.083605806,
+                "total_tokens": 785,
+                "total_time": 0.099307993,
+                "prompt_tokens_details": {
+                  "cached_tokens": 512
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 14
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 2,
+                "systemMessages": 1,
+                "userMessages": 1,
+                "assistantMessages": 0,
+                "toolCalls": 0,
+                "toolResults": 0,
+                "estimatedTokens": 344,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 0,
+                "recentMessageTokens": 0,
+                "toolTokens": 0,
+                "currentRequestTokens": 15,
+                "fullHistoryMessageCount": 2,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 902
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:02.177Z",
+              "type": "llm",
+              "requestId": "2182675b-4f26-4cd7-98db-787a240861b9",
+              "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+              "requestIndex": 2,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 974,
+              "outputTokens": 95,
+              "totalTokens": 1069,
+              "latencyMs": 684.16,
+              "toolRound": 1,
+              "isToolRound": true,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.376149596,
+                "prompt_tokens": 974,
+                "prompt_time": 0.048538873,
+                "completion_tokens": 95,
+                "completion_time": 0.198404667,
+                "total_tokens": 1069,
+                "total_time": 0.24694354,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 28
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 4,
+                "systemMessages": 1,
+                "userMessages": 1,
+                "assistantMessages": 1,
+                "toolCalls": 1,
+                "toolResults": 1,
+                "estimatedTokens": 618,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 0,
+                "recentMessageTokens": 0,
+                "toolTokens": 274,
+                "currentRequestTokens": 15,
+                "fullHistoryMessageCount": 4,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1176
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:17.966Z",
+              "type": "llm",
+              "requestId": "856a6b44-794b-4186-a692-b58e8fb0d5e0",
+              "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+              "requestIndex": 1,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 1086,
+              "outputTokens": 60,
+              "totalTokens": 1146,
+              "latencyMs": 510.2,
+              "toolRound": 0,
+              "isToolRound": false,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.290665106,
+                "prompt_tokens": 1086,
+                "prompt_time": 0.048699471,
+                "completion_tokens": 60,
+                "completion_time": 0.126641555,
+                "total_tokens": 1146,
+                "total_time": 0.175341026,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 34
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 6,
+                "systemMessages": 1,
+                "userMessages": 2,
+                "assistantMessages": 2,
+                "toolCalls": 1,
+                "toolResults": 1,
+                "estimatedTokens": 733,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 384,
+                "recentMessageTokens": 384,
+                "toolTokens": 274,
+                "currentRequestTokens": 20,
+                "fullHistoryMessageCount": 6,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1291
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:19.123Z",
+              "type": "llm",
+              "requestId": "5fbd2d08-5714-47cb-82da-9deda46a7444",
+              "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+              "requestIndex": 2,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 1413,
+              "outputTokens": 85,
+              "totalTokens": 1498,
+              "latencyMs": 1156.6,
+              "toolRound": 1,
+              "isToolRound": true,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.865036508,
+                "prompt_tokens": 1413,
+                "prompt_time": 0.067808092,
+                "completion_tokens": 85,
+                "completion_time": 0.179174986,
+                "total_tokens": 1498,
+                "total_time": 0.246983078,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 45
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 8,
+                "systemMessages": 1,
+                "userMessages": 2,
+                "assistantMessages": 3,
+                "toolCalls": 2,
+                "toolResults": 2,
+                "estimatedTokens": 1079,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 384,
+                "recentMessageTokens": 384,
+                "toolTokens": 620,
+                "currentRequestTokens": 20,
+                "fullHistoryMessageCount": 8,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1637
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:26.285Z",
+              "type": "llm",
+              "requestId": "708e6251-1a3e-4f54-834d-07834b90b5ea",
+              "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+              "requestIndex": 1,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 1507,
+              "outputTokens": 78,
+              "totalTokens": 1585,
+              "latencyMs": 659.06,
+              "toolRound": 0,
+              "isToolRound": false,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.370793009,
+                "prompt_tokens": 1507,
+                "prompt_time": 0.078740896,
+                "completion_tokens": 78,
+                "completion_time": 0.162206147,
+                "total_tokens": 1585,
+                "total_time": 0.240947043,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 38
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 10,
+                "systemMessages": 1,
+                "userMessages": 3,
+                "assistantMessages": 4,
+                "toolCalls": 2,
+                "toolResults": 2,
+                "estimatedTokens": 1180,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 841,
+                "recentMessageTokens": 841,
+                "toolTokens": 620,
+                "currentRequestTokens": 10,
+                "fullHistoryMessageCount": 10,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1738
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:36.890Z",
+              "type": "llm",
+              "requestId": "330d33af-0234-43b5-b4b3-3955c923d1b8",
+              "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+              "requestIndex": 1,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 1603,
+              "outputTokens": 95,
+              "totalTokens": 1698,
+              "latencyMs": 486.36,
+              "toolRound": 0,
+              "isToolRound": false,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.158839065,
+                "prompt_tokens": 1603,
+                "prompt_time": 0.064357594,
+                "completion_tokens": 95,
+                "completion_time": 0.196544027,
+                "total_tokens": 1698,
+                "total_time": 0.260901621,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 73
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 12,
+                "systemMessages": 1,
+                "userMessages": 4,
+                "assistantMessages": 5,
+                "toolCalls": 2,
+                "toolResults": 2,
+                "estimatedTokens": 1286,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 936,
+                "recentMessageTokens": 936,
+                "toolTokens": 620,
+                "currentRequestTokens": 21,
+                "fullHistoryMessageCount": 12,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1844
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:37.659Z",
+              "type": "llm",
+              "requestId": "bdc49db4-5932-4cea-812b-5d4c18f5ab41",
+              "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+              "requestIndex": 2,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 1716,
+              "outputTokens": 85,
+              "totalTokens": 1801,
+              "latencyMs": 768.42,
+              "toolRound": 1,
+              "isToolRound": true,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.370014497,
+                "prompt_tokens": 1716,
+                "prompt_time": 0.170785741,
+                "completion_tokens": 85,
+                "completion_time": 0.17884747,
+                "total_tokens": 1801,
+                "total_time": 0.349633211,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 24
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 14,
+                "systemMessages": 1,
+                "userMessages": 4,
+                "assistantMessages": 6,
+                "toolCalls": 3,
+                "toolResults": 3,
+                "estimatedTokens": 1435,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 936,
+                "recentMessageTokens": 936,
+                "toolTokens": 769,
+                "currentRequestTokens": 21,
+                "fullHistoryMessageCount": 14,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 558,
+                "estimatedFullRequestTokens": 1993
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:38.348Z",
+              "type": "llm",
+              "requestId": "4dfec8a8-2c0d-427b-ade6-62d8e8977b2f",
+              "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+              "requestIndex": 3,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 2126,
+              "outputTokens": 52,
+              "totalTokens": 2178,
+              "latencyMs": 688.51,
+              "toolRound": 2,
+              "isToolRound": true,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.375726042,
+                "prompt_tokens": 2126,
+                "prompt_time": 0.104784923,
+                "completion_tokens": 52,
+                "completion_time": 0.108565588,
+                "total_tokens": 2178,
+                "total_time": 0.213350511,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 8
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 16,
+                "systemMessages": 1,
+                "userMessages": 4,
+                "assistantMessages": 7,
+                "toolCalls": 4,
+                "toolResults": 4,
+                "estimatedTokens": 1621,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 936,
+                "recentMessageTokens": 936,
+                "toolTokens": 955,
+                "currentRequestTokens": 21,
+                "fullHistoryMessageCount": 16,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 989,
+                "estimatedFullRequestTokens": 2610
+              },
+              "rateLimitHeaders": null
+            },
+            {
+              "timestamp": "2026-08-21T12:38:50.508Z",
+              "type": "llm",
+              "requestId": "6bd7ddac-c334-496b-8047-fdbc1ab17311",
+              "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+              "requestIndex": 4,
+              "model": "openai/gpt-oss-120b",
+              "inputTokens": 2243,
+              "outputTokens": 104,
+              "totalTokens": 2347,
+              "latencyMs": 12160.65,
+              "toolRound": 3,
+              "isToolRound": true,
+              "status": "success",
+              "error": null,
+              "rawUsage": {
+                "queue_time": 0.321615368,
+                "prompt_tokens": 2243,
+                "prompt_time": 0.383262975,
+                "completion_tokens": 104,
+                "completion_time": 0.215821243,
+                "total_tokens": 2347,
+                "total_time": 0.599084218,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 20
+                }
+              },
+              "purpose": "conversation",
+              "context": {
+                "messageCount": 18,
+                "systemMessages": 1,
+                "userMessages": 4,
+                "assistantMessages": 8,
+                "toolCalls": 5,
+                "toolResults": 5,
+                "estimatedTokens": 1772,
+                "systemTokens": 329,
+                "summaryTokens": 0,
+                "recentConversationTokens": 936,
+                "recentMessageTokens": 936,
+                "toolTokens": 1106,
+                "currentRequestTokens": 21,
+                "fullHistoryMessageCount": 18,
+                "olderMessagesSummarized": 0,
+                "contextLimit": 3500,
+                "toolSchemaTokens": 989,
+                "estimatedFullRequestTokens": 2761
+              },
+              "rateLimitHeaders": null
+            }
+          ]
+        },
+        "turns": [
+          {
+            "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+            "llmRequests": 2,
+            "inputTokens": 1719,
+            "outputTokens": 135,
+            "totalTokens": 1854,
+            "analysis": {
+              "toolRounds": 1,
+              "maxContextTokens": 974,
+              "minContextTokens": 0,
+              "averageContextTokens": 859.5
+            },
+            "toolAnalysis": {
+              "toolRounds": 1,
+              "llmRequests": 2,
+              "toolCalls": 1,
+              "uniqueTools": 1,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 745,
+              "toolRoundOutputTokens": 40,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 745,
+                  "outputTokens": 40,
+                  "totalTokens": 785,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "list_menu",
+                      "argumentsFingerprint": "3a4c780de99bf4d4"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 974,
+                  "outputTokens": 95,
+                  "totalTokens": 1069,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "list_menu",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "3a4c780de99bf4d4"
+                }
+              ]
+            },
+            "tool_analysis": {
+              "toolRounds": 1,
+              "llmRequests": 2,
+              "toolCalls": 1,
+              "uniqueTools": 1,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 745,
+              "toolRoundOutputTokens": 40,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 745,
+                  "outputTokens": 40,
+                  "totalTokens": 785,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "list_menu",
+                      "argumentsFingerprint": "3a4c780de99bf4d4"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 974,
+                  "outputTokens": 95,
+                  "totalTokens": 1069,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "list_menu",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "3a4c780de99bf4d4"
+                }
+              ]
+            },
+            "requests": [
+              {
+                "timestamp": "2026-08-21T12:38:01.492Z",
+                "type": "llm",
+                "requestId": "71803661-cb57-49e9-b5a1-41fad0aa2d1c",
+                "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 745,
+                "outputTokens": 40,
+                "totalTokens": 785,
+                "latencyMs": 426.25,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.281327044,
+                  "prompt_tokens": 745,
+                  "prompt_time": 0.015702187,
+                  "completion_tokens": 40,
+                  "completion_time": 0.083605806,
+                  "total_tokens": 785,
+                  "total_time": 0.099307993,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 512
+                  },
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 14
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 2,
+                  "systemMessages": 1,
+                  "userMessages": 1,
+                  "assistantMessages": 0,
+                  "toolCalls": 0,
+                  "toolResults": 0,
+                  "estimatedTokens": 344,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 0,
+                  "recentMessageTokens": 0,
+                  "toolTokens": 0,
+                  "currentRequestTokens": 15,
+                  "fullHistoryMessageCount": 2,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 902
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:02.177Z",
+                "type": "llm",
+                "requestId": "2182675b-4f26-4cd7-98db-787a240861b9",
+                "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 974,
+                "outputTokens": 95,
+                "totalTokens": 1069,
+                "latencyMs": 684.16,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.376149596,
+                  "prompt_tokens": 974,
+                  "prompt_time": 0.048538873,
+                  "completion_tokens": 95,
+                  "completion_time": 0.198404667,
+                  "total_tokens": 1069,
+                  "total_time": 0.24694354,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 28
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 4,
+                  "systemMessages": 1,
+                  "userMessages": 1,
+                  "assistantMessages": 1,
+                  "toolCalls": 1,
+                  "toolResults": 1,
+                  "estimatedTokens": 618,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 0,
+                  "recentMessageTokens": 0,
+                  "toolTokens": 274,
+                  "currentRequestTokens": 15,
+                  "fullHistoryMessageCount": 4,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1176
+                },
+                "rateLimitHeaders": null
+              }
+            ]
+          },
+          {
+            "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+            "llmRequests": 2,
+            "inputTokens": 2499,
+            "outputTokens": 145,
+            "totalTokens": 2644,
+            "analysis": {
+              "toolRounds": 1,
+              "maxContextTokens": 1413,
+              "minContextTokens": 0,
+              "averageContextTokens": 1249.5
+            },
+            "toolAnalysis": {
+              "toolRounds": 1,
+              "llmRequests": 2,
+              "toolCalls": 1,
+              "uniqueTools": 1,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 1086,
+              "toolRoundOutputTokens": 60,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1086,
+                  "outputTokens": 60,
+                  "totalTokens": 1146,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "get_item_details",
+                      "argumentsFingerprint": "4474af43e00eb524"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 1413,
+                  "outputTokens": 85,
+                  "totalTokens": 1498,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "get_item_details",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "4474af43e00eb524"
+                }
+              ]
+            },
+            "tool_analysis": {
+              "toolRounds": 1,
+              "llmRequests": 2,
+              "toolCalls": 1,
+              "uniqueTools": 1,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 1086,
+              "toolRoundOutputTokens": 60,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1086,
+                  "outputTokens": 60,
+                  "totalTokens": 1146,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "get_item_details",
+                      "argumentsFingerprint": "4474af43e00eb524"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 1413,
+                  "outputTokens": 85,
+                  "totalTokens": 1498,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "get_item_details",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "4474af43e00eb524"
+                }
+              ]
+            },
+            "requests": [
+              {
+                "timestamp": "2026-08-21T12:38:17.966Z",
+                "type": "llm",
+                "requestId": "856a6b44-794b-4186-a692-b58e8fb0d5e0",
+                "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1086,
+                "outputTokens": 60,
+                "totalTokens": 1146,
+                "latencyMs": 510.2,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.290665106,
+                  "prompt_tokens": 1086,
+                  "prompt_time": 0.048699471,
+                  "completion_tokens": 60,
+                  "completion_time": 0.126641555,
+                  "total_tokens": 1146,
+                  "total_time": 0.175341026,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 34
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 6,
+                  "systemMessages": 1,
+                  "userMessages": 2,
+                  "assistantMessages": 2,
+                  "toolCalls": 1,
+                  "toolResults": 1,
+                  "estimatedTokens": 733,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 384,
+                  "recentMessageTokens": 384,
+                  "toolTokens": 274,
+                  "currentRequestTokens": 20,
+                  "fullHistoryMessageCount": 6,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1291
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:19.123Z",
+                "type": "llm",
+                "requestId": "5fbd2d08-5714-47cb-82da-9deda46a7444",
+                "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1413,
+                "outputTokens": 85,
+                "totalTokens": 1498,
+                "latencyMs": 1156.6,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.865036508,
+                  "prompt_tokens": 1413,
+                  "prompt_time": 0.067808092,
+                  "completion_tokens": 85,
+                  "completion_time": 0.179174986,
+                  "total_tokens": 1498,
+                  "total_time": 0.246983078,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 45
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 8,
+                  "systemMessages": 1,
+                  "userMessages": 2,
+                  "assistantMessages": 3,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1079,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 384,
+                  "recentMessageTokens": 384,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 20,
+                  "fullHistoryMessageCount": 8,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1637
+                },
+                "rateLimitHeaders": null
+              }
+            ]
+          },
+          {
+            "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+            "llmRequests": 1,
+            "inputTokens": 1507,
+            "outputTokens": 78,
+            "totalTokens": 1585,
+            "analysis": {
+              "toolRounds": 0,
+              "maxContextTokens": 1507,
+              "minContextTokens": 0,
+              "averageContextTokens": 1507
+            },
+            "toolAnalysis": {
+              "toolRounds": 0,
+              "llmRequests": 1,
+              "toolCalls": 0,
+              "uniqueTools": 0,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 0,
+              "toolRoundOutputTokens": 0,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1507,
+                  "outputTokens": 78,
+                  "totalTokens": 1585,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": []
+            },
+            "tool_analysis": {
+              "toolRounds": 0,
+              "llmRequests": 1,
+              "toolCalls": 0,
+              "uniqueTools": 0,
+              "repeatedToolCalls": 0,
+              "sameParameterCalls": 0,
+              "repeatedTools": [],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 0,
+              "toolRoundOutputTokens": 0,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1507,
+                  "outputTokens": 78,
+                  "totalTokens": 1585,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "NECESSARY",
+              "potentiallyIndependentPairs": [],
+              "reasons": [],
+              "tools": []
+            },
+            "requests": [
+              {
+                "timestamp": "2026-08-21T12:38:26.285Z",
+                "type": "llm",
+                "requestId": "708e6251-1a3e-4f54-834d-07834b90b5ea",
+                "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1507,
+                "outputTokens": 78,
+                "totalTokens": 1585,
+                "latencyMs": 659.06,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.370793009,
+                  "prompt_tokens": 1507,
+                  "prompt_time": 0.078740896,
+                  "completion_tokens": 78,
+                  "completion_time": 0.162206147,
+                  "total_tokens": 1585,
+                  "total_time": 0.240947043,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 38
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 10,
+                  "systemMessages": 1,
+                  "userMessages": 3,
+                  "assistantMessages": 4,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1180,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 841,
+                  "recentMessageTokens": 841,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 10,
+                  "fullHistoryMessageCount": 10,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1738
+                },
+                "rateLimitHeaders": null
+              }
+            ]
+          },
+          {
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "llmRequests": 4,
+            "inputTokens": 7688,
+            "outputTokens": 336,
+            "totalTokens": 8024,
+            "analysis": {
+              "toolRounds": 3,
+              "maxContextTokens": 2243,
+              "minContextTokens": 0,
+              "averageContextTokens": 1922
+            },
+            "toolAnalysis": {
+              "toolRounds": 3,
+              "llmRequests": 4,
+              "toolCalls": 3,
+              "uniqueTools": 2,
+              "repeatedToolCalls": 1,
+              "sameParameterCalls": 0,
+              "repeatedTools": [
+                {
+                  "toolName": "add_to_cart",
+                  "count": 2
+                }
+              ],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 5445,
+              "toolRoundOutputTokens": 232,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1603,
+                  "outputTokens": 95,
+                  "totalTokens": 1698,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "get_item_details",
+                      "argumentsFingerprint": "988c07885cedeb25"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 1716,
+                  "outputTokens": 85,
+                  "totalTokens": 1801,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "add_to_cart",
+                      "argumentsFingerprint": "e0ea37c5dd8d942e"
+                    }
+                  ]
+                },
+                {
+                  "round": 2,
+                  "requestIndex": 3,
+                  "inputTokens": 2126,
+                  "outputTokens": 52,
+                  "totalTokens": 2178,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "add_to_cart",
+                      "argumentsFingerprint": "913a2f24562a4259"
+                    }
+                  ]
+                },
+                {
+                  "round": 3,
+                  "requestIndex": 4,
+                  "inputTokens": 2243,
+                  "outputTokens": 104,
+                  "totalTokens": 2347,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "POTENTIALLY OPTIMIZABLE",
+              "potentiallyIndependentPairs": [],
+              "reasons": [
+                "A tool was called more than once in this turn; inspect whether later calls depend on changed state or repeat the same lookup."
+              ],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "get_item_details",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "988c07885cedeb25"
+                },
+                {
+                  "round": 1,
+                  "toolName": "add_to_cart",
+                  "requestIndex": 2,
+                  "argumentsFingerprint": "e0ea37c5dd8d942e"
+                },
+                {
+                  "round": 2,
+                  "toolName": "add_to_cart",
+                  "requestIndex": 3,
+                  "argumentsFingerprint": "913a2f24562a4259"
+                }
+              ]
+            },
+            "tool_analysis": {
+              "toolRounds": 3,
+              "llmRequests": 4,
+              "toolCalls": 3,
+              "uniqueTools": 2,
+              "repeatedToolCalls": 1,
+              "sameParameterCalls": 0,
+              "repeatedTools": [
+                {
+                  "toolName": "add_to_cart",
+                  "count": 2
+                }
+              ],
+              "failedLlmRequests": 0,
+              "toolRoundInputTokens": 5445,
+              "toolRoundOutputTokens": 232,
+              "toolSessions": [
+                {
+                  "round": 0,
+                  "requestIndex": 1,
+                  "inputTokens": 1603,
+                  "outputTokens": 95,
+                  "totalTokens": 1698,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "get_item_details",
+                      "argumentsFingerprint": "988c07885cedeb25"
+                    }
+                  ]
+                },
+                {
+                  "round": 1,
+                  "requestIndex": 2,
+                  "inputTokens": 1716,
+                  "outputTokens": 85,
+                  "totalTokens": 1801,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "add_to_cart",
+                      "argumentsFingerprint": "e0ea37c5dd8d942e"
+                    }
+                  ]
+                },
+                {
+                  "round": 2,
+                  "requestIndex": 3,
+                  "inputTokens": 2126,
+                  "outputTokens": 52,
+                  "totalTokens": 2178,
+                  "status": "success",
+                  "error": null,
+                  "tools": [
+                    {
+                      "toolName": "add_to_cart",
+                      "argumentsFingerprint": "913a2f24562a4259"
+                    }
+                  ]
+                },
+                {
+                  "round": 3,
+                  "requestIndex": 4,
+                  "inputTokens": 2243,
+                  "outputTokens": 104,
+                  "totalTokens": 2347,
+                  "status": "success",
+                  "error": null,
+                  "tools": []
+                }
+              ],
+              "classification": "POTENTIALLY OPTIMIZABLE",
+              "potentiallyIndependentPairs": [],
+              "reasons": [
+                "A tool was called more than once in this turn; inspect whether later calls depend on changed state or repeat the same lookup."
+              ],
+              "tools": [
+                {
+                  "round": 0,
+                  "toolName": "get_item_details",
+                  "requestIndex": 1,
+                  "argumentsFingerprint": "988c07885cedeb25"
+                },
+                {
+                  "round": 1,
+                  "toolName": "add_to_cart",
+                  "requestIndex": 2,
+                  "argumentsFingerprint": "e0ea37c5dd8d942e"
+                },
+                {
+                  "round": 2,
+                  "toolName": "add_to_cart",
+                  "requestIndex": 3,
+                  "argumentsFingerprint": "913a2f24562a4259"
+                }
+              ]
+            },
+            "requests": [
+              {
+                "timestamp": "2026-08-21T12:38:36.890Z",
+                "type": "llm",
+                "requestId": "330d33af-0234-43b5-b4b3-3955c923d1b8",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 1,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1603,
+                "outputTokens": 95,
+                "totalTokens": 1698,
+                "latencyMs": 486.36,
+                "toolRound": 0,
+                "isToolRound": false,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.158839065,
+                  "prompt_tokens": 1603,
+                  "prompt_time": 0.064357594,
+                  "completion_tokens": 95,
+                  "completion_time": 0.196544027,
+                  "total_tokens": 1698,
+                  "total_time": 0.260901621,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 73
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 12,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 5,
+                  "toolCalls": 2,
+                  "toolResults": 2,
+                  "estimatedTokens": 1286,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 620,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 12,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1844
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:37.659Z",
+                "type": "llm",
+                "requestId": "bdc49db4-5932-4cea-812b-5d4c18f5ab41",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 2,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 1716,
+                "outputTokens": 85,
+                "totalTokens": 1801,
+                "latencyMs": 768.42,
+                "toolRound": 1,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.370014497,
+                  "prompt_tokens": 1716,
+                  "prompt_time": 0.170785741,
+                  "completion_tokens": 85,
+                  "completion_time": 0.17884747,
+                  "total_tokens": 1801,
+                  "total_time": 0.349633211,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 24
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 14,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 6,
+                  "toolCalls": 3,
+                  "toolResults": 3,
+                  "estimatedTokens": 1435,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 769,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 14,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 558,
+                  "estimatedFullRequestTokens": 1993
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:38.348Z",
+                "type": "llm",
+                "requestId": "4dfec8a8-2c0d-427b-ade6-62d8e8977b2f",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 3,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 2126,
+                "outputTokens": 52,
+                "totalTokens": 2178,
+                "latencyMs": 688.51,
+                "toolRound": 2,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.375726042,
+                  "prompt_tokens": 2126,
+                  "prompt_time": 0.104784923,
+                  "completion_tokens": 52,
+                  "completion_time": 0.108565588,
+                  "total_tokens": 2178,
+                  "total_time": 0.213350511,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 8
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 16,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 7,
+                  "toolCalls": 4,
+                  "toolResults": 4,
+                  "estimatedTokens": 1621,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 955,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 16,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 989,
+                  "estimatedFullRequestTokens": 2610
+                },
+                "rateLimitHeaders": null
+              },
+              {
+                "timestamp": "2026-08-21T12:38:50.508Z",
+                "type": "llm",
+                "requestId": "6bd7ddac-c334-496b-8047-fdbc1ab17311",
+                "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+                "requestIndex": 4,
+                "model": "openai/gpt-oss-120b",
+                "inputTokens": 2243,
+                "outputTokens": 104,
+                "totalTokens": 2347,
+                "latencyMs": 12160.65,
+                "toolRound": 3,
+                "isToolRound": true,
+                "status": "success",
+                "error": null,
+                "rawUsage": {
+                  "queue_time": 0.321615368,
+                  "prompt_tokens": 2243,
+                  "prompt_time": 0.383262975,
+                  "completion_tokens": 104,
+                  "completion_time": 0.215821243,
+                  "total_tokens": 2347,
+                  "total_time": 0.599084218,
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 20
+                  }
+                },
+                "purpose": "conversation",
+                "context": {
+                  "messageCount": 18,
+                  "systemMessages": 1,
+                  "userMessages": 4,
+                  "assistantMessages": 8,
+                  "toolCalls": 5,
+                  "toolResults": 5,
+                  "estimatedTokens": 1772,
+                  "systemTokens": 329,
+                  "summaryTokens": 0,
+                  "recentConversationTokens": 936,
+                  "recentMessageTokens": 936,
+                  "toolTokens": 1106,
+                  "currentRequestTokens": 21,
+                  "fullHistoryMessageCount": 18,
+                  "olderMessagesSummarized": 0,
+                  "contextLimit": 3500,
+                  "toolSchemaTokens": 989,
+                  "estimatedFullRequestTokens": 2761
+                },
+                "rateLimitHeaders": null
+              }
+            ]
+          }
+        ],
         "events": [
           {
-            "timestamp": "2026-08-20T13:14:02.369Z",
+            "timestamp": "2026-08-21T12:38:01.065Z",
             "type": "stt",
             "model": "whisper-large-v3-turbo",
             "audioSeconds": 134217.728,
-            "audioBytes": 38340,
-            "charactersReturned": 6,
-            "latencyMs": 296.31,
+            "audioBytes": 65026,
+            "charactersReturned": 30,
+            "latencyMs": 244.36,
             "status": "success",
             "error": null,
             "responseMetadata": null,
             "rateLimitHeaders": null
           },
           {
-            "timestamp": "2026-08-20T13:14:02.968Z",
+            "timestamp": "2026-08-21T12:38:01.492Z",
             "type": "llm",
+            "requestId": "71803661-cb57-49e9-b5a1-41fad0aa2d1c",
+            "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+            "requestIndex": 1,
             "model": "openai/gpt-oss-120b",
-            "inputTokens": 1094,
-            "outputTokens": 81,
-            "totalTokens": 1175,
-            "latencyMs": 598.93,
+            "inputTokens": 745,
+            "outputTokens": 40,
+            "totalTokens": 785,
+            "latencyMs": 426.25,
+            "toolRound": 0,
+            "isToolRound": false,
             "status": "success",
             "error": null,
             "rawUsage": {
-              "queue_time": 0.316426833,
-              "prompt_tokens": 1094,
-              "prompt_time": 0.061653651,
-              "completion_tokens": 81,
-              "completion_time": 0.169916408,
-              "total_tokens": 1175,
-              "total_time": 0.231570059,
-              "completion_tokens_details": {
-                "reasoning_tokens": 61
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:03.575Z",
-            "type": "tts",
-            "provider": "Groq",
-            "model": "canopylabs/orpheus-v1-english",
-            "voice": "hannah",
-            "role": "primary TTS",
-            "charactersSent": 38,
-            "latencyMs": 606.12,
-            "status": "failure",
-            "fallbackTriggered": false,
-            "fallbackReason": null,
-            "error": "Body is unusable: Body has already been read",
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:05.417Z",
-            "type": "tts",
-            "provider": "Deepgram",
-            "model": "aura-asteria-en",
-            "voice": "hannah",
-            "role": "fallback TTS",
-            "charactersSent": 38,
-            "latencyMs": 1841.5,
-            "status": "success",
-            "fallbackTriggered": true,
-            "fallbackReason": "Body is unusable: Body has already been read",
-            "error": null,
-            "rateLimitHeaders": {
-              "access-control-allow-credentials": "true",
-              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
-              "content-type": "audio/wav",
-              "date": "Thu, 20 Aug 2026 13:14:04 GMT",
-              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
-              "dg-breaks-applied": "0",
-              "dg-char-count": "38",
-              "dg-model-name": "aura-asteria-en",
-              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
-              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
-              "dg-pronunciations-applied": "0",
-              "dg-request-id": "01a01f4e-a9bb-7523-8825-f2e949bcb523",
-              "transfer-encoding": "chunked",
-              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
-            }
-          },
-          {
-            "timestamp": "2026-08-20T13:14:07.568Z",
-            "type": "stt",
-            "model": "whisper-large-v3-turbo",
-            "audioSeconds": 134217.728,
-            "audioBytes": 41970,
-            "charactersReturned": 23,
-            "latencyMs": 219.54,
-            "status": "success",
-            "error": null,
-            "responseMetadata": null,
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:08.593Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 1186,
-            "outputTokens": 244,
-            "totalTokens": 1430,
-            "latencyMs": 1025.65,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.375203957,
-              "prompt_tokens": 1186,
-              "prompt_time": 0.050535449,
-              "completion_tokens": 244,
-              "completion_time": 0.513398069,
-              "total_tokens": 1430,
-              "total_time": 0.563933518,
-              "completion_tokens_details": {
-                "reasoning_tokens": 184
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:08.642Z",
-            "type": "tts",
-            "provider": "Groq",
-            "model": "canopylabs/orpheus-v1-english",
-            "voice": "hannah",
-            "role": "primary TTS",
-            "charactersSent": 218,
-            "latencyMs": 47.39,
-            "status": "failure",
-            "fallbackTriggered": false,
-            "fallbackReason": null,
-            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3539, Requested 218. Please try again in 1h2m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:12.484Z",
-            "type": "tts",
-            "provider": "Deepgram",
-            "model": "aura-asteria-en",
-            "voice": "hannah",
-            "role": "fallback TTS",
-            "charactersSent": 218,
-            "latencyMs": 3842.43,
-            "status": "success",
-            "fallbackTriggered": true,
-            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3539, Requested 218. Please try again in 1h2m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "error": null,
-            "rateLimitHeaders": {
-              "access-control-allow-credentials": "true",
-              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
-              "content-type": "audio/wav",
-              "date": "Thu, 20 Aug 2026 13:14:08 GMT",
-              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
-              "dg-breaks-applied": "0",
-              "dg-char-count": "218",
-              "dg-model-name": "aura-asteria-en",
-              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
-              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
-              "dg-pronunciations-applied": "0",
-              "dg-request-id": "01a01f4e-bb50-7212-a88e-ca4c01e9b5c4",
-              "transfer-encoding": "chunked",
-              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
-            }
-          },
-          {
-            "timestamp": "2026-08-20T13:14:17.836Z",
-            "type": "stt",
-            "model": "whisper-large-v3-turbo",
-            "audioSeconds": 134217.728,
-            "audioBytes": 113516,
-            "charactersReturned": 36,
-            "latencyMs": 271.06,
-            "status": "success",
-            "error": null,
-            "responseMetadata": null,
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:18.732Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 1445,
-            "outputTokens": 46,
-            "totalTokens": 1491,
-            "latencyMs": 896.06,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.297448713,
-              "prompt_tokens": 1445,
-              "prompt_time": 0.452191594,
-              "completion_tokens": 46,
-              "completion_time": 0.096713333,
-              "total_tokens": 1491,
-              "total_time": 0.548904927,
-              "completion_tokens_details": {
-                "reasoning_tokens": 20
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:19.280Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 1699,
-            "outputTokens": 118,
-            "totalTokens": 1817,
-            "latencyMs": 547.96,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.15901283,
-              "prompt_tokens": 1699,
-              "prompt_time": 0.082787087,
-              "completion_tokens": 118,
-              "completion_time": 0.250250518,
-              "total_tokens": 1817,
-              "total_time": 0.333037605,
-              "completion_tokens_details": {
-                "reasoning_tokens": 16
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:19.343Z",
-            "type": "tts",
-            "provider": "Groq",
-            "model": "canopylabs/orpheus-v1-english",
-            "voice": "hannah",
-            "role": "primary TTS",
-            "charactersSent": 302,
-            "latencyMs": 62.58,
-            "status": "failure",
-            "fallbackTriggered": false,
-            "fallbackReason": null,
-            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3539, Requested 302. Please try again in 1h36m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:24.923Z",
-            "type": "tts",
-            "provider": "Deepgram",
-            "model": "aura-asteria-en",
-            "voice": "hannah",
-            "role": "fallback TTS",
-            "charactersSent": 302,
-            "latencyMs": 5579.77,
-            "status": "success",
-            "fallbackTriggered": true,
-            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3539, Requested 302. Please try again in 1h36m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "error": null,
-            "rateLimitHeaders": {
-              "access-control-allow-credentials": "true",
-              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
-              "content-type": "audio/wav",
-              "date": "Thu, 20 Aug 2026 13:14:20 GMT",
-              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
-              "dg-breaks-applied": "0",
-              "dg-char-count": "302",
-              "dg-model-name": "aura-asteria-en",
-              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
-              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
-              "dg-pronunciations-applied": "0",
-              "dg-request-id": "01a01f4e-e750-71f1-92a1-3f6c5ebf29a3",
-              "transfer-encoding": "chunked",
-              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
-            }
-          },
-          {
-            "timestamp": "2026-08-20T13:14:36.035Z",
-            "type": "stt",
-            "model": "whisper-large-v3-turbo",
-            "audioSeconds": 134217.728,
-            "audioBytes": 172230,
-            "charactersReturned": 47,
-            "latencyMs": 314.29,
-            "status": "success",
-            "error": null,
-            "responseMetadata": null,
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:36.667Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 1835,
-            "outputTokens": 61,
-            "totalTokens": 1896,
-            "latencyMs": 632.16,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.319395223,
-              "prompt_tokens": 1835,
-              "prompt_time": 0.134592123,
-              "completion_tokens": 61,
-              "completion_time": 0.129184996,
-              "total_tokens": 1896,
-              "total_time": 0.263777119,
-              "completion_tokens_details": {
-                "reasoning_tokens": 38
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:37.281Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 2205,
-            "outputTokens": 28,
-            "totalTokens": 2233,
-            "latencyMs": 613.22,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.36937289,
-              "prompt_tokens": 2205,
-              "prompt_time": 0.133072024,
-              "completion_tokens": 28,
-              "completion_time": 0.058469357,
-              "total_tokens": 2233,
-              "total_time": 0.191541381,
-              "completion_tokens_details": {
-                "reasoning_tokens": 6
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:37.980Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 2329,
-            "outputTokens": 92,
-            "totalTokens": 2421,
-            "latencyMs": 699.49,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.31419329,
-              "prompt_tokens": 2329,
-              "prompt_time": 0.115935079,
-              "completion_tokens": 92,
-              "completion_time": 0.195968973,
-              "total_tokens": 2421,
-              "total_time": 0.311904052,
-              "completion_tokens_details": {
-                "reasoning_tokens": 32
-              }
-            },
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:38.020Z",
-            "type": "tts",
-            "provider": "Groq",
-            "model": "canopylabs/orpheus-v1-english",
-            "voice": "hannah",
-            "role": "primary TTS",
-            "charactersSent": 159,
-            "latencyMs": 39.32,
-            "status": "failure",
-            "fallbackTriggered": false,
-            "fallbackReason": null,
-            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3538, Requested 159. Please try again in 38m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:42.796Z",
-            "type": "tts",
-            "provider": "Deepgram",
-            "model": "aura-asteria-en",
-            "voice": "hannah",
-            "role": "fallback TTS",
-            "charactersSent": 159,
-            "latencyMs": 4775.96,
-            "status": "success",
-            "fallbackTriggered": true,
-            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3538, Requested 159. Please try again in 38m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
-            "error": null,
-            "rateLimitHeaders": {
-              "access-control-allow-credentials": "true",
-              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
-              "content-type": "audio/wav",
-              "date": "Thu, 20 Aug 2026 13:14:38 GMT",
-              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
-              "dg-breaks-applied": "0",
-              "dg-char-count": "159",
-              "dg-model-name": "aura-asteria-en",
-              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
-              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
-              "dg-pronunciations-applied": "0",
-              "dg-request-id": "01a01f4f-308f-71c3-bdbb-a44cdb945a06",
-              "transfer-encoding": "chunked",
-              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
-            }
-          },
-          {
-            "timestamp": "2026-08-20T13:14:49.260Z",
-            "type": "stt",
-            "model": "whisper-large-v3-turbo",
-            "audioSeconds": 134217.728,
-            "audioBytes": 96312,
-            "charactersReturned": 34,
-            "latencyMs": 261.44,
-            "status": "success",
-            "error": null,
-            "responseMetadata": null,
-            "rateLimitHeaders": null
-          },
-          {
-            "timestamp": "2026-08-20T13:14:57.026Z",
-            "type": "llm",
-            "model": "openai/gpt-oss-120b",
-            "inputTokens": 2434,
-            "outputTokens": 56,
-            "totalTokens": 2490,
-            "latencyMs": 7766.65,
-            "status": "success",
-            "error": null,
-            "rawUsage": {
-              "queue_time": 0.378635454,
-              "prompt_tokens": 2434,
-              "prompt_time": 0.026710851,
-              "completion_tokens": 56,
-              "completion_time": 0.117817131,
-              "total_tokens": 2490,
-              "total_time": 0.144527982,
+              "queue_time": 0.281327044,
+              "prompt_tokens": 745,
+              "prompt_time": 0.015702187,
+              "completion_tokens": 40,
+              "completion_time": 0.083605806,
+              "total_tokens": 785,
+              "total_time": 0.099307993,
               "prompt_tokens_details": {
-                "cached_tokens": 2048
+                "cached_tokens": 512
               },
               "completion_tokens_details": {
                 "reasoning_tokens": 14
               }
             },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 2,
+              "systemMessages": 1,
+              "userMessages": 1,
+              "assistantMessages": 0,
+              "toolCalls": 0,
+              "toolResults": 0,
+              "estimatedTokens": 344,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 0,
+              "recentMessageTokens": 0,
+              "toolTokens": 0,
+              "currentRequestTokens": 15,
+              "fullHistoryMessageCount": 2,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 902
+            },
             "rateLimitHeaders": null
           },
           {
-            "timestamp": "2026-08-20T13:14:57.067Z",
+            "timestamp": "2026-08-21T12:38:02.177Z",
+            "type": "llm",
+            "requestId": "2182675b-4f26-4cd7-98db-787a240861b9",
+            "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+            "requestIndex": 2,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 974,
+            "outputTokens": 95,
+            "totalTokens": 1069,
+            "latencyMs": 684.16,
+            "toolRound": 1,
+            "isToolRound": true,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.376149596,
+              "prompt_tokens": 974,
+              "prompt_time": 0.048538873,
+              "completion_tokens": 95,
+              "completion_time": 0.198404667,
+              "total_tokens": 1069,
+              "total_time": 0.24694354,
+              "completion_tokens_details": {
+                "reasoning_tokens": 28
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 4,
+              "systemMessages": 1,
+              "userMessages": 1,
+              "assistantMessages": 1,
+              "toolCalls": 1,
+              "toolResults": 1,
+              "estimatedTokens": 618,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 0,
+              "recentMessageTokens": 0,
+              "toolTokens": 274,
+              "currentRequestTokens": 15,
+              "fullHistoryMessageCount": 4,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1176
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:02.177Z",
+            "type": "turn",
+            "turnId": "52e23a92-0a4c-4f49-9225-855169666170",
+            "toolCalls": [
+              {
+                "round": 0,
+                "toolName": "list_menu",
+                "requestIndex": 1,
+                "argumentsFingerprint": "3a4c780de99bf4d4"
+              }
+            ],
+            "toolSessions": [
+              {
+                "round": 0,
+                "requestIndex": 1,
+                "inputTokens": 745,
+                "outputTokens": 40,
+                "totalTokens": 785,
+                "status": "success",
+                "error": null,
+                "tools": [
+                  {
+                    "toolName": "list_menu",
+                    "argumentsFingerprint": "3a4c780de99bf4d4"
+                  }
+                ]
+              },
+              {
+                "round": 1,
+                "requestIndex": 2,
+                "inputTokens": 974,
+                "outputTokens": 95,
+                "totalTokens": 1069,
+                "status": "success",
+                "error": null,
+                "tools": []
+              }
+            ]
+          },
+          {
+            "timestamp": "2026-08-21T12:38:02.218Z",
             "type": "tts",
             "provider": "Groq",
             "model": "canopylabs/orpheus-v1-english",
             "voice": "hannah",
             "role": "primary TTS",
-            "charactersSent": 119,
-            "latencyMs": 40.65,
+            "charactersSent": 197,
+            "latencyMs": 40.63,
             "status": "failure",
             "fallbackTriggered": false,
             "fallbackReason": null,
-            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3537, Requested 119. Please try again in 22m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3579, Requested 197. Please try again in 1h10m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
             "rateLimitHeaders": null
           },
           {
-            "timestamp": "2026-08-20T13:15:00.201Z",
+            "timestamp": "2026-08-21T12:38:04.584Z",
             "type": "tts",
             "provider": "Deepgram",
             "model": "aura-asteria-en",
             "voice": "hannah",
             "role": "fallback TTS",
-            "charactersSent": 119,
-            "latencyMs": 3133.12,
+            "charactersSent": 197,
+            "latencyMs": 2365.46,
             "status": "success",
             "fallbackTriggered": true,
-            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3537, Requested 119. Please try again in 22m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3579, Requested 197. Please try again in 1h10m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
             "error": null,
             "rateLimitHeaders": {
               "access-control-allow-credentials": "true",
               "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
               "content-type": "audio/wav",
-              "date": "Thu, 20 Aug 2026 13:14:57 GMT",
+              "date": "Fri, 21 Aug 2026 12:38:02 GMT",
               "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
               "dg-breaks-applied": "0",
-              "dg-char-count": "119",
+              "dg-char-count": "197",
               "dg-model-name": "aura-asteria-en",
               "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
               "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
               "dg-pronunciations-applied": "0",
-              "dg-request-id": "01a01f4f-7aed-7d50-ad80-6b1568fb0802",
+              "dg-request-id": "01a02454-0a9a-7a93-80cc-c8b37775fc4e",
               "transfer-encoding": "chunked",
               "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
             }
           },
           {
-            "timestamp": "2026-08-20T13:15:05.423Z",
+            "timestamp": "2026-08-21T12:38:17.456Z",
             "type": "stt",
             "model": "whisper-large-v3-turbo",
             "audioSeconds": 134217.728,
-            "audioBytes": 30798,
-            "charactersReturned": 4,
-            "latencyMs": 228.19,
+            "audioBytes": 146274,
+            "charactersReturned": 51,
+            "latencyMs": 258.61,
             "status": "success",
             "error": null,
             "responseMetadata": null,
             "rateLimitHeaders": null
           },
           {
-            "timestamp": "2026-08-20T13:15:06.783Z",
+            "timestamp": "2026-08-21T12:38:17.966Z",
             "type": "llm",
+            "requestId": "856a6b44-794b-4186-a692-b58e8fb0d5e0",
+            "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+            "requestIndex": 1,
             "model": "openai/gpt-oss-120b",
-            "inputTokens": 2497,
-            "outputTokens": 378,
-            "totalTokens": 2875,
-            "latencyMs": 1360.12,
+            "inputTokens": 1086,
+            "outputTokens": 60,
+            "totalTokens": 1146,
+            "latencyMs": 510.2,
+            "toolRound": 0,
+            "isToolRound": false,
             "status": "success",
             "error": null,
             "rawUsage": {
-              "queue_time": 0.314508179,
-              "prompt_tokens": 2497,
-              "prompt_time": 0.188855405,
-              "completion_tokens": 378,
-              "completion_time": 0.800272592,
-              "total_tokens": 2875,
-              "total_time": 0.989127997,
+              "queue_time": 0.290665106,
+              "prompt_tokens": 1086,
+              "prompt_time": 0.048699471,
+              "completion_tokens": 60,
+              "completion_time": 0.126641555,
+              "total_tokens": 1146,
+              "total_time": 0.175341026,
               "completion_tokens_details": {
-                "reasoning_tokens": 140
+                "reasoning_tokens": 34
               }
             },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 6,
+              "systemMessages": 1,
+              "userMessages": 2,
+              "assistantMessages": 2,
+              "toolCalls": 1,
+              "toolResults": 1,
+              "estimatedTokens": 733,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 384,
+              "recentMessageTokens": 384,
+              "toolTokens": 274,
+              "currentRequestTokens": 20,
+              "fullHistoryMessageCount": 6,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1291
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:19.123Z",
+            "type": "llm",
+            "requestId": "5fbd2d08-5714-47cb-82da-9deda46a7444",
+            "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+            "requestIndex": 2,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 1413,
+            "outputTokens": 85,
+            "totalTokens": 1498,
+            "latencyMs": 1156.6,
+            "toolRound": 1,
+            "isToolRound": true,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.865036508,
+              "prompt_tokens": 1413,
+              "prompt_time": 0.067808092,
+              "completion_tokens": 85,
+              "completion_time": 0.179174986,
+              "total_tokens": 1498,
+              "total_time": 0.246983078,
+              "completion_tokens_details": {
+                "reasoning_tokens": 45
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 8,
+              "systemMessages": 1,
+              "userMessages": 2,
+              "assistantMessages": 3,
+              "toolCalls": 2,
+              "toolResults": 2,
+              "estimatedTokens": 1079,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 384,
+              "recentMessageTokens": 384,
+              "toolTokens": 620,
+              "currentRequestTokens": 20,
+              "fullHistoryMessageCount": 8,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1637
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:19.123Z",
+            "type": "turn",
+            "turnId": "c1846089-bb0b-496b-9ca2-288978e56022",
+            "toolCalls": [
+              {
+                "round": 0,
+                "toolName": "get_item_details",
+                "requestIndex": 1,
+                "argumentsFingerprint": "4474af43e00eb524"
+              }
+            ],
+            "toolSessions": [
+              {
+                "round": 0,
+                "requestIndex": 1,
+                "inputTokens": 1086,
+                "outputTokens": 60,
+                "totalTokens": 1146,
+                "status": "success",
+                "error": null,
+                "tools": [
+                  {
+                    "toolName": "get_item_details",
+                    "argumentsFingerprint": "4474af43e00eb524"
+                  }
+                ]
+              },
+              {
+                "round": 1,
+                "requestIndex": 2,
+                "inputTokens": 1413,
+                "outputTokens": 85,
+                "totalTokens": 1498,
+                "status": "success",
+                "error": null,
+                "tools": []
+              }
+            ]
+          },
+          {
+            "timestamp": "2026-08-21T12:38:19.175Z",
+            "type": "tts",
+            "provider": "Groq",
+            "model": "canopylabs/orpheus-v1-english",
+            "voice": "hannah",
+            "role": "primary TTS",
+            "charactersSent": 112,
+            "latencyMs": 51.35,
+            "status": "failure",
+            "fallbackTriggered": false,
+            "fallbackReason": null,
+            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3578, Requested 112. Please try again in 36m0s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:23.728Z",
+            "type": "tts",
+            "provider": "Deepgram",
+            "model": "aura-asteria-en",
+            "voice": "hannah",
+            "role": "fallback TTS",
+            "charactersSent": 112,
+            "latencyMs": 4552.77,
+            "status": "success",
+            "fallbackTriggered": true,
+            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3578, Requested 112. Please try again in 36m0s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "error": null,
+            "rateLimitHeaders": {
+              "access-control-allow-credentials": "true",
+              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
+              "content-type": "audio/wav",
+              "date": "Fri, 21 Aug 2026 12:38:19 GMT",
+              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
+              "dg-breaks-applied": "0",
+              "dg-char-count": "112",
+              "dg-model-name": "aura-asteria-en",
+              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
+              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
+              "dg-pronunciations-applied": "0",
+              "dg-request-id": "01a02454-4cbe-7571-b9bc-d051abd094d3",
+              "transfer-encoding": "chunked",
+              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
+            }
+          },
+          {
+            "timestamp": "2026-08-21T12:38:25.626Z",
+            "type": "stt",
+            "model": "whisper-large-v3-turbo",
+            "audioSeconds": 134217.728,
+            "audioBytes": 23882,
+            "charactersReturned": 11,
+            "latencyMs": 202.59,
+            "status": "success",
+            "error": null,
+            "responseMetadata": null,
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:26.285Z",
+            "type": "llm",
+            "requestId": "708e6251-1a3e-4f54-834d-07834b90b5ea",
+            "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+            "requestIndex": 1,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 1507,
+            "outputTokens": 78,
+            "totalTokens": 1585,
+            "latencyMs": 659.06,
+            "toolRound": 0,
+            "isToolRound": false,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.370793009,
+              "prompt_tokens": 1507,
+              "prompt_time": 0.078740896,
+              "completion_tokens": 78,
+              "completion_time": 0.162206147,
+              "total_tokens": 1585,
+              "total_time": 0.240947043,
+              "completion_tokens_details": {
+                "reasoning_tokens": 38
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 10,
+              "systemMessages": 1,
+              "userMessages": 3,
+              "assistantMessages": 4,
+              "toolCalls": 2,
+              "toolResults": 2,
+              "estimatedTokens": 1180,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 841,
+              "recentMessageTokens": 841,
+              "toolTokens": 620,
+              "currentRequestTokens": 10,
+              "fullHistoryMessageCount": 10,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1738
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:26.285Z",
+            "type": "turn",
+            "turnId": "8cabc9a6-e18b-4c2f-a1b5-38fe2a16f214",
+            "toolCalls": [],
+            "toolSessions": [
+              {
+                "round": 0,
+                "requestIndex": 1,
+                "inputTokens": 1507,
+                "outputTokens": 78,
+                "totalTokens": 1585,
+                "status": "success",
+                "error": null,
+                "tools": []
+              }
+            ]
+          },
+          {
+            "timestamp": "2026-08-21T12:38:26.343Z",
+            "type": "tts",
+            "provider": "Groq",
+            "model": "canopylabs/orpheus-v1-english",
+            "voice": "hannah",
+            "role": "primary TTS",
+            "charactersSent": 124,
+            "latencyMs": 57.6,
+            "status": "failure",
+            "fallbackTriggered": false,
+            "fallbackReason": null,
+            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3578, Requested 124. Please try again in 40m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:28.494Z",
+            "type": "tts",
+            "provider": "Deepgram",
+            "model": "aura-asteria-en",
+            "voice": "hannah",
+            "role": "fallback TTS",
+            "charactersSent": 124,
+            "latencyMs": 2151.07,
+            "status": "success",
+            "fallbackTriggered": true,
+            "fallbackReason": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3578, Requested 124. Please try again in 40m48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
+            "error": null,
+            "rateLimitHeaders": {
+              "access-control-allow-credentials": "true",
+              "access-control-expose-headers": "dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings",
+              "content-type": "audio/wav",
+              "date": "Fri, 21 Aug 2026 12:38:26 GMT",
+              "dg-additional-model-uuids": "d6b10ae6-9589-4db9-a5d8-26621b8e3a50",
+              "dg-breaks-applied": "0",
+              "dg-char-count": "124",
+              "dg-model-name": "aura-asteria-en",
+              "dg-model-uuid": "ecb76e9d-f2db-4127-8060-79b05590d22f",
+              "dg-project-id": "ac0272c8-b8b1-4563-98f0-ed50a77e6a3d",
+              "dg-pronunciations-applied": "0",
+              "dg-request-id": "01a02454-6884-73d2-814a-4b94c1047f3b",
+              "transfer-encoding": "chunked",
+              "vary": "origin, access-control-request-method, access-control-request-headers, accept-encoding"
+            }
+          },
+          {
+            "timestamp": "2026-08-21T12:38:36.404Z",
+            "type": "stt",
+            "model": "whisper-large-v3-turbo",
+            "audioSeconds": 134217.728,
+            "audioBytes": 165930,
+            "charactersReturned": 55,
+            "latencyMs": 250.9,
+            "status": "success",
+            "error": null,
+            "responseMetadata": null,
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:36.890Z",
+            "type": "llm",
+            "requestId": "330d33af-0234-43b5-b4b3-3955c923d1b8",
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "requestIndex": 1,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 1603,
+            "outputTokens": 95,
+            "totalTokens": 1698,
+            "latencyMs": 486.36,
+            "toolRound": 0,
+            "isToolRound": false,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.158839065,
+              "prompt_tokens": 1603,
+              "prompt_time": 0.064357594,
+              "completion_tokens": 95,
+              "completion_time": 0.196544027,
+              "total_tokens": 1698,
+              "total_time": 0.260901621,
+              "completion_tokens_details": {
+                "reasoning_tokens": 73
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 12,
+              "systemMessages": 1,
+              "userMessages": 4,
+              "assistantMessages": 5,
+              "toolCalls": 2,
+              "toolResults": 2,
+              "estimatedTokens": 1286,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 936,
+              "recentMessageTokens": 936,
+              "toolTokens": 620,
+              "currentRequestTokens": 21,
+              "fullHistoryMessageCount": 12,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1844
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:37.659Z",
+            "type": "llm",
+            "requestId": "bdc49db4-5932-4cea-812b-5d4c18f5ab41",
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "requestIndex": 2,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 1716,
+            "outputTokens": 85,
+            "totalTokens": 1801,
+            "latencyMs": 768.42,
+            "toolRound": 1,
+            "isToolRound": true,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.370014497,
+              "prompt_tokens": 1716,
+              "prompt_time": 0.170785741,
+              "completion_tokens": 85,
+              "completion_time": 0.17884747,
+              "total_tokens": 1801,
+              "total_time": 0.349633211,
+              "completion_tokens_details": {
+                "reasoning_tokens": 24
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 14,
+              "systemMessages": 1,
+              "userMessages": 4,
+              "assistantMessages": 6,
+              "toolCalls": 3,
+              "toolResults": 3,
+              "estimatedTokens": 1435,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 936,
+              "recentMessageTokens": 936,
+              "toolTokens": 769,
+              "currentRequestTokens": 21,
+              "fullHistoryMessageCount": 14,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 558,
+              "estimatedFullRequestTokens": 1993
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:38.348Z",
+            "type": "llm",
+            "requestId": "4dfec8a8-2c0d-427b-ade6-62d8e8977b2f",
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "requestIndex": 3,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 2126,
+            "outputTokens": 52,
+            "totalTokens": 2178,
+            "latencyMs": 688.51,
+            "toolRound": 2,
+            "isToolRound": true,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.375726042,
+              "prompt_tokens": 2126,
+              "prompt_time": 0.104784923,
+              "completion_tokens": 52,
+              "completion_time": 0.108565588,
+              "total_tokens": 2178,
+              "total_time": 0.213350511,
+              "completion_tokens_details": {
+                "reasoning_tokens": 8
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 16,
+              "systemMessages": 1,
+              "userMessages": 4,
+              "assistantMessages": 7,
+              "toolCalls": 4,
+              "toolResults": 4,
+              "estimatedTokens": 1621,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 936,
+              "recentMessageTokens": 936,
+              "toolTokens": 955,
+              "currentRequestTokens": 21,
+              "fullHistoryMessageCount": 16,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 989,
+              "estimatedFullRequestTokens": 2610
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:50.508Z",
+            "type": "llm",
+            "requestId": "6bd7ddac-c334-496b-8047-fdbc1ab17311",
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "requestIndex": 4,
+            "model": "openai/gpt-oss-120b",
+            "inputTokens": 2243,
+            "outputTokens": 104,
+            "totalTokens": 2347,
+            "latencyMs": 12160.65,
+            "toolRound": 3,
+            "isToolRound": true,
+            "status": "success",
+            "error": null,
+            "rawUsage": {
+              "queue_time": 0.321615368,
+              "prompt_tokens": 2243,
+              "prompt_time": 0.383262975,
+              "completion_tokens": 104,
+              "completion_time": 0.215821243,
+              "total_tokens": 2347,
+              "total_time": 0.599084218,
+              "completion_tokens_details": {
+                "reasoning_tokens": 20
+              }
+            },
+            "purpose": "conversation",
+            "context": {
+              "messageCount": 18,
+              "systemMessages": 1,
+              "userMessages": 4,
+              "assistantMessages": 8,
+              "toolCalls": 5,
+              "toolResults": 5,
+              "estimatedTokens": 1772,
+              "systemTokens": 329,
+              "summaryTokens": 0,
+              "recentConversationTokens": 936,
+              "recentMessageTokens": 936,
+              "toolTokens": 1106,
+              "currentRequestTokens": 21,
+              "fullHistoryMessageCount": 18,
+              "olderMessagesSummarized": 0,
+              "contextLimit": 3500,
+              "toolSchemaTokens": 989,
+              "estimatedFullRequestTokens": 2761
+            },
+            "rateLimitHeaders": null
+          },
+          {
+            "timestamp": "2026-08-21T12:38:50.508Z",
+            "type": "turn",
+            "turnId": "6b611ab4-b244-4d4d-8e07-01a9bfe6d90a",
+            "toolCalls": [
+              {
+                "round": 0,
+                "toolName": "get_item_details",
+                "requestIndex": 1,
+                "argumentsFingerprint": "988c07885cedeb25"
+              },
+              {
+                "round": 1,
+                "toolName": "add_to_cart",
+                "requestIndex": 2,
+                "argumentsFingerprint": "e0ea37c5dd8d942e"
+              },
+              {
+                "round": 2,
+                "toolName": "add_to_cart",
+                "requestIndex": 3,
+                "argumentsFingerprint": "913a2f24562a4259"
+              }
+            ],
+            "toolSessions": [
+              {
+                "round": 0,
+                "requestIndex": 1,
+                "inputTokens": 1603,
+                "outputTokens": 95,
+                "totalTokens": 1698,
+                "status": "success",
+                "error": null,
+                "tools": [
+                  {
+                    "toolName": "get_item_details",
+                    "argumentsFingerprint": "988c07885cedeb25"
+                  }
+                ]
+              },
+              {
+                "round": 1,
+                "requestIndex": 2,
+                "inputTokens": 1716,
+                "outputTokens": 85,
+                "totalTokens": 1801,
+                "status": "success",
+                "error": null,
+                "tools": [
+                  {
+                    "toolName": "add_to_cart",
+                    "argumentsFingerprint": "e0ea37c5dd8d942e"
+                  }
+                ]
+              },
+              {
+                "round": 2,
+                "requestIndex": 3,
+                "inputTokens": 2126,
+                "outputTokens": 52,
+                "totalTokens": 2178,
+                "status": "success",
+                "error": null,
+                "tools": [
+                  {
+                    "toolName": "add_to_cart",
+                    "argumentsFingerprint": "913a2f24562a4259"
+                  }
+                ]
+              },
+              {
+                "round": 3,
+                "requestIndex": 4,
+                "inputTokens": 2243,
+                "outputTokens": 104,
+                "totalTokens": 2347,
+                "status": "success",
+                "error": null,
+                "tools": []
+              }
+            ]
+          },
+          {
+            "timestamp": "2026-08-21T12:38:50.551Z",
+            "type": "tts",
+            "provider": "Groq",
+            "model": "canopylabs/orpheus-v1-english",
+            "voice": "hannah",
+            "role": "primary TTS",
+            "charactersSent": 249,
+            "latencyMs": 42.65,
+            "status": "failure",
+            "fallbackTriggered": false,
+            "fallbackReason": null,
+            "error": "429 {\"error\":{\"message\":\"Rate limit reached for model `canopylabs/orpheus-v1-english` in organization `org_01kzv4a17teywty1sygf35an0t` service tier `on_demand` on tokens per day (TPD): Limit 3600, Used 3577, Requested 249. Please try again in 1h30m24s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}",
             "rateLimitHeaders": null
           }
         ]
       },
-      "savedAt": "2026-08-20T13:15:06.987Z"
+      "savedAt": "2026-08-21T12:39:33.186Z"
     }
   ]
 }

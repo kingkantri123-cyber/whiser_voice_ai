@@ -40,6 +40,35 @@ The dashboard endpoint returns aggregate usage and estimated daily, weekly,
 monthly, and yearly costs. A compact dashboard is also printed when a call
 ends.
 
+## Bounded LLM context
+
+The full `session.history` remains available in memory, but it is never sent
+directly to Groq. `src/contextBuilder.js` sends system instructions, one compact
+summary of older turns, recent conversation messages, and the active turn/tool
+chain. Older tool results are deterministically compacted before they enter
+longer-lived context.
+
+Tune the context budget with environment variables:
+
+```env
+MAX_CONTEXT_TOKENS=3500
+RECENT_TURN_COUNT=6
+SUMMARY_TRIGGER_TOKENS=2500
+MAX_SUMMARY_TOKENS=400
+```
+
+Summarization happens only after the configured trigger is exceeded. Summary
+requests are recorded as LLM usage events with `purpose: "context_summary"`.
+Context diagnostics are stored on each LLM event under `context`, including
+estimated context size, recent message count, summarized message count, and
+tool messages included.
+
+Run the provider-free context tests with:
+
+```bash
+npm run test:context
+```
+
 ## Try it
 
 ```bash

@@ -228,6 +228,179 @@
         "totalTokens": 24730,
         "model": "openai/gpt-oss-120b"
       }
+    },
+    {
+      "sessionId": "gV4ucboUgAHQ",
+      "savedAt": "2026-08-21T10:37:22.090Z",
+      "startedAt": "2026-08-21T10:35:41.758Z",
+      "endedAt": "2026-08-21T10:37:22.090Z",
+      "status": "active",
+      "contact": {
+        "email": "smrmehrach123@gmail.com",
+        "name": "Syed Mehrach Ar-Rahman"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "nkzFv1nK",
+            "itemId": "drink_cola",
+            "itemName": "Cola",
+            "quantity": 1,
+            "unitPrice": 2.75,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Large",
+                "nested": []
+              }
+            ],
+            "lineTotal": 2.75
+          }
+        ],
+        "total": 2.75,
+        "placedAt": "2026-08-21T10:37:15.533Z"
+      },
+      "metrics": {
+        "turns": 4,
+        "totalInputTokens": 19486,
+        "totalOutputTokens": 660,
+        "turnLatenciesMs": [
+          1302,
+          2422,
+          2897,
+          1761
+        ],
+        "totalTokens": 20146,
+        "model": "openai/gpt-oss-120b",
+        "context": {
+          "fullHistoryMessageCount": 24,
+          "contextMessageCount": 24,
+          "recentMessagesIncluded": 18,
+          "olderMessagesSummarized": 0,
+          "toolMessagesIncluded": 8,
+          "estimatedContextTokens": 1565,
+          "summaryTokens": 0,
+          "recentContextTokens": 933,
+          "currentRequestTokens": 27,
+          "contextLimit": 3500,
+          "context": {
+            "messageCount": 24,
+            "systemMessages": 1,
+            "userMessages": 4,
+            "assistantMessages": 11,
+            "toolCalls": 8,
+            "toolResults": 8,
+            "estimatedTokens": 1565,
+            "systemTokens": 329,
+            "summaryTokens": 0,
+            "recentConversationTokens": 933,
+            "recentMessageTokens": 933,
+            "toolTokens": 948,
+            "currentRequestTokens": 27,
+            "fullHistoryMessageCount": 24,
+            "olderMessagesSummarized": 0,
+            "contextLimit": 3500
+          }
+        }
+      }
+    },
+    {
+      "sessionId": "IsNxRCD3DU0V",
+      "savedAt": "2026-08-21T10:46:14.104Z",
+      "startedAt": "2026-08-21T10:44:03.700Z",
+      "endedAt": "2026-08-21T10:46:14.104Z",
+      "status": "active",
+      "contact": {
+        "name": "Sayyid Mehraj Ar-Rahman",
+        "phone": "961-873-4357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "YvPJJNN_",
+            "itemId": "pz_pepperoni",
+            "itemName": "Pepperoni Pizza",
+            "quantity": 1,
+            "unitPrice": 16.5,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Large (14\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 16.5
+          },
+          {
+            "cartItemId": "GD_EkfLk",
+            "itemId": "drink_cola",
+            "itemName": "Cola",
+            "quantity": 1,
+            "unitPrice": 2,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Regular",
+                "nested": []
+              }
+            ],
+            "lineTotal": 2
+          }
+        ],
+        "total": 18.5,
+        "placedAt": "2026-08-21T10:45:59.146Z"
+      },
+      "metrics": {
+        "turns": 7,
+        "totalInputTokens": 34728,
+        "totalOutputTokens": 1153,
+        "turnLatenciesMs": [
+          2459,
+          641,
+          918,
+          10368,
+          643,
+          1021,
+          14131
+        ],
+        "totalTokens": 35881,
+        "model": "openai/gpt-oss-120b",
+        "context": {
+          "fullHistoryMessageCount": 34,
+          "contextMessageCount": 34,
+          "recentMessagesIncluded": 28,
+          "olderMessagesSummarized": 0,
+          "toolMessagesIncluded": 10,
+          "estimatedContextTokens": 2395,
+          "summaryTokens": 0,
+          "recentContextTokens": 1710,
+          "currentRequestTokens": 15,
+          "contextLimit": 3500,
+          "context": {
+            "messageCount": 34,
+            "systemMessages": 1,
+            "userMessages": 7,
+            "assistantMessages": 16,
+            "toolCalls": 10,
+            "toolResults": 10,
+            "estimatedTokens": 2395,
+            "systemTokens": 329,
+            "summaryTokens": 0,
+            "recentConversationTokens": 1710,
+            "recentMessageTokens": 1710,
+            "toolTokens": 1363,
+            "currentRequestTokens": 15,
+            "fullHistoryMessageCount": 34,
+            "olderMessagesSummarized": 0,
+            "contextLimit": 3500
+          }
+        }
+      }
     }
   ]
 }

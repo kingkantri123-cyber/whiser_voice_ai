@@ -5,14 +5,19 @@ import { menu, findItem } from "./data/menu.js";
 // explicit about *never guessing* -- the model should always call
 // list_menu / get_item_details rather than recall a price from earlier
 // in the conversation.
+//
+// Descriptions here are kept deliberately tight: this whole array is
+// re-sent as the `tools` param on every single LLM call (not just once
+// per turn), so every word here is a recurring token cost, not a one-time
+// one. Trim wording, not the behavioral constraints (never-guess,
+// error-driven retry, confirm-before-place-order) -- those are load-
+// bearing for correctness.
 // -----------------------------------------------------------------------
 
 const optionSelectionSchema = {
   type: "array",
   description:
-    "Selected options for the item's option groups. One entry per chosen option. " +
-    "For an option that has its own nested required choice (e.g. a combo entrée " +
-    "that requires picking a side), include a `nested` array on that entry.",
+    "One entry per chosen option group. Add a `nested` array when the chosen option has its own required sub-choice (e.g. a combo's side).",
   items: {
     type: "object",
     properties: {
@@ -20,7 +25,7 @@ const optionSelectionSchema = {
       optionId: { type: "string", description: "Chosen option id within that group." },
       nested: {
         type: "array",
-        description: "Only present when the chosen option has nestedOptionGroups.",
+        description: "Only when the chosen option has nestedOptionGroups.",
         items: {
           type: "object",
           properties: {
@@ -35,12 +40,16 @@ const optionSelectionSchema = {
   },
 };
 
+// Tools only relevant once the cart has at least one line. Excluding these
+// during the item-selection phase of a call (the majority of most orders)
+// shrinks the tool schema sent on every round -- see getToolDeclarations().
+export const CHECKOUT_TOOL_NAMES = ["update_cart_item", "remove_from_cart", "place_order", "record_contact_info"];
+
 export const toolDeclarations = [
   {
     name: "list_menu",
     description:
-      "List menu categories and items with base prices. Always use this instead of " +
-      "recalling menu items/prices from memory -- the menu can be filtered by category.",
+      "List menu categories/items with prices. Never recall prices from memory -- always call this. Optional category filter.",
     parameters: {
       type: "object",
       properties: {
@@ -54,9 +63,7 @@ export const toolDeclarations = [
   {
     name: "get_item_details",
     description:
-      "Get full details for one menu item, including every option group (required and " +
-      "optional), each option's price delta, and any nested required choices. Call this " +
-      "before adding an item to the cart so you know exactly what must be asked.",
+      "Get an item's full option details (required/optional groups, price deltas, nested choices). Call before add_to_cart.",
     parameters: {
       type: "object",
       properties: {
@@ -68,9 +75,7 @@ export const toolDeclarations = [
   {
     name: "add_to_cart",
     description:
-      "Add an item to the cart. Every required option group (including nested ones) " +
-      "must be filled or this call is rejected with a specific error telling you what's " +
-      "missing -- read the error and ask the caller for exactly that.",
+      "Add an item to the cart. Missing required options return a specific error -- ask the caller for exactly what it names, then retry.",
     parameters: {
       type: "object",
       properties: {
@@ -105,21 +110,19 @@ export const toolDeclarations = [
   },
   {
     name: "view_cart",
-    description: "Get the current cart contents and running total. Use this to read back the order for confirmation before placing it.",
+    description: "Get cart contents and total. Use to read back the order before placing it.",
     parameters: { type: "object", properties: {} },
   },
   {
     name: "place_order",
     description:
-      "Finalize and place the order. Only call this after reading the full cart back to " +
-      "the caller and getting explicit confirmation. Fails if the cart is empty.",
+      "Finalize the order. Only call after reading the cart back and getting explicit confirmation. Fails if the cart is empty.",
     parameters: { type: "object", properties: {} },
   },
   {
     name: "record_contact_info",
     description:
-      "Save the caller's name/phone/email so a confirmation can be sent. Call this once " +
-      "you have at least a phone or email, ideally before place_order.",
+      "Save caller name/phone/email for the confirmation. Call once you have a phone or email, ideally before place_order.",
     parameters: {
       type: "object",
       properties: {

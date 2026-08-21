@@ -604,7 +604,7 @@
             audioStream = null;
             if (audioContext) await audioContext.close().catch(function () {});
             audioContext = null; analyser = null;
-            if (sessionId) fetch('/api/end/' + sessionId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ended' }) }).catch(function () {});
+            if (sessionId) await fetch('/api/end/' + sessionId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ended' }), keepalive: true }).catch(function () {});
             if (!orderBanner.style.display || orderBanner.style.display === 'none') { setBtnState('ready'); setStatus('Call ended', ''); }
         }
         function monitorVoice() {
@@ -653,7 +653,7 @@
                 if (generation !== turnGeneration) return;
                 if (data.audioBase64 && callActive) await playBase64Audio(data.audioBase64);
                 if (generation !== turnGeneration) return;
-                if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { setBtnState('done'); setStatus('Order placed! 🎉', 'ready'); callActive = false; }
+                if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { await endCall(); setBtnState('done'); setStatus(data.sessionStatus === 'ended' ? 'Call ended' : 'Order placed! 🎉', 'ready'); }
                 else if (callActive) { setBtnState('recording'); setStatus('Listening… speak naturally', 'listening'); }
             } catch (err) {
                 if (err.name !== 'AbortError' && callActive) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); }

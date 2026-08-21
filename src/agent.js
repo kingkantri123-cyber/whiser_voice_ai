@@ -1,11 +1,22 @@
 import Groq from "groq-sdk";
-import { toolDeclarations, executeTool } from "./tools.js";
+import { toolDeclarations, executeTool, CHECKOUT_TOOL_NAMES } from "./tools.js";
 import { elapsedMs, startTimer } from "./usageMonitor.js";
+import { buildLLMContext, estimateTokens } from "./contextBuilder.js";
+import { createHash, randomUUID } from "node:crypto";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 const MAX_TOOL_ROUNDS = 6; // guard against a runaway tool-calling loop
+// gpt-oss-120b on Groq supports reasoning_effort. Tool-selection rounds only
+// need to pick a function + arguments, not produce customer-facing prose, so
+// they're run at low effort. Set to null to disable and use the API default
+// on every round.
+// Opt-in: this trades off some reasoning quality on tool-selection rounds
+// for latency, so it's off (null) by default. Set env TOOL_ROUND_REASONING_EFFORT=low
+// to try it -- watch reply quality on complex multi-option orders before
+// keeping it on.
+const TOOL_ROUND_REASONING_EFFORT = process.env.TOOL_ROUND_REASONING_EFFORT || null;
 
 const SYSTEM_INSTRUCTION = `
 You are a friendly, efficient phone agent for a restaurant. You take orders over what
@@ -29,8 +40,26 @@ Hard rules:
 - If the caller wants to end the call, confirm and call end_call.
 `.trim();
 
-function toGroqTools() {
-  return toolDeclarations.map((decl) => ({
+// Cart-management/checkout tools (update, remove, place_order,
+// record_contact_info) only make sense once the cart has a line in it.
+// Withholding their schema during the item-selection phase of a call --
+// which is most of a typical order -- shrinks the tools payload sent on
+// every single LLM request, not just once per turn.
+function cartHasItems(session) {
+  try {
+    const view = session.cart?.view?.();
+    return Array.isArray(view?.lines) && view.lines.length > 0;
+  } catch {
+    return true; // fail open: never hide tools if cart state can't be read
+  }
+}
+
+function toGroqTools(session) {
+  const includeCheckout = cartHasItems(session);
+  const decls = includeCheckout
+    ? toolDeclarations
+    : toolDeclarations.filter((decl) => !CHECKOUT_TOOL_NAMES.includes(decl.name));
+  return decls.map((decl) => ({
     type: "function",
     function: {
       name: decl.name,
@@ -38,6 +67,10 @@ function toGroqTools() {
       parameters: decl.parameters,
     },
   }));
+}
+
+function argumentsFingerprint(args) {
+  return createHash("sha256").update(JSON.stringify(args)).digest("hex").slice(0, 16);
 }
 
 /**
@@ -52,19 +85,31 @@ export async function runTurn(session, userText) {
   session.history.push({ role: "user", content: userText });
 
   const toolCallLog = [];
+  const turnStartIndex = session.history.length - 1;
+  const turnId = randomUUID();
+  session.usageMonitor?.beginTurn(turnId);
   let inputTokens = 0;
   let outputTokens = 0;
   const startedAt = Date.now();
 
   for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
     const requestStartedAt = startTimer();
+    // Recomputed every round (not hoisted) because a tool call earlier in
+    // this same turn -- e.g. the caller's first add_to_cart -- can change
+    // which tools are relevant for the next round.
+    const toolsPayload = toGroqTools(session);
+    const toolSchemaTokens = estimateTokens(JSON.stringify(toolsPayload));
+    const context = await buildLLMContext(session, turnStartIndex, { toolSchemaTokens });
     let response;
     try {
       response = await groq.chat.completions.create({
         model: MODEL,
-        messages: session.history,
-        tools: toGroqTools(),
+        messages: context.messages,
+        tools: toolsPayload,
         tool_choice: "auto",
+        ...(round > 0 && TOOL_ROUND_REASONING_EFFORT
+          ? { reasoning_effort: TOOL_ROUND_REASONING_EFFORT }
+          : {}),
       });
       session.usageMonitor?.recordLlm({
         model: MODEL,
@@ -72,14 +117,19 @@ export async function runTurn(session, userText) {
         latency: elapsedMs(requestStartedAt),
         status: "success",
         response,
+        context: context.debug.context,
+        toolRound: round,
       });
     } catch (error) {
       session.usageMonitor?.recordLlm({
-        model: MODEL,
+        model: activeModel,
         latency: elapsedMs(requestStartedAt),
         status: "failure",
-        error: error.message,
+        error,
+        context: context.debug.context,
+        toolRound: round,
       });
+      session.usageMonitor?.endTurn();
       throw error;
     }
 
@@ -102,7 +152,9 @@ export async function runTurn(session, userText) {
       session.metrics.totalOutputTokens += outputTokens;
       session.metrics.totalTokens = session.metrics.totalInputTokens + session.metrics.totalOutputTokens;
       session.metrics.model = MODEL;
+      session.metrics.context = session.contextDebug;
       session.metrics.turnLatenciesMs.push(elapsedMs);
+      session.usageMonitor?.endTurn();
 
       return {
         reply: text,
@@ -114,6 +166,7 @@ export async function runTurn(session, userText) {
           outputTokens,
           totalTokens: inputTokens + outputTokens,
           model: MODEL,
+          context: session.contextDebug,
         },
         sessionStatus: session.status,
       };
@@ -131,11 +184,42 @@ export async function runTurn(session, userText) {
       }
       const result = executeTool(session, call.function.name, args);
       toolCallLog.push({ name: call.function.name, args, result });
+      session.usageMonitor?.recordToolCall({
+        round,
+        toolName: call.function.name,
+        argumentsFingerprint: argumentsFingerprint(args),
+      });
       session.history.push({
         role: "tool",
         tool_call_id: call.id,
         content: JSON.stringify(result),
       });
+
+      if (call.function.name === "end_call" && session.status === "ended") {
+        const elapsedMs = Date.now() - startedAt;
+        session.metrics.turns += 1;
+        session.metrics.totalInputTokens += inputTokens;
+        session.metrics.totalOutputTokens += outputTokens;
+        session.metrics.totalTokens = session.metrics.totalInputTokens + session.metrics.totalOutputTokens;
+        session.metrics.model = activeModel;
+        session.metrics.context = session.contextDebug;
+        session.metrics.turnLatenciesMs.push(elapsedMs);
+        session.usageMonitor?.endTurn();
+        return {
+          reply: "Thanks for calling. Goodbye.",
+          toolCalls: toolCallLog,
+          cart: session.cart.view(),
+          metrics: {
+            elapsedMs,
+            inputTokens,
+            outputTokens,
+            totalTokens: inputTokens + outputTokens,
+            model: activeModel,
+            context: session.contextDebug,
+          },
+          sessionStatus: session.status,
+        };
+      }
     }
   }
 
@@ -145,6 +229,8 @@ export async function runTurn(session, userText) {
   session.metrics.totalOutputTokens += outputTokens;
   session.metrics.totalTokens = session.metrics.totalInputTokens + session.metrics.totalOutputTokens;
   session.metrics.model = MODEL;
+  session.metrics.context = session.contextDebug;
+  session.usageMonitor?.endTurn();
   return {
     reply:
       "Sorry, I'm having trouble completing that -- could you repeat what you'd like?",
@@ -156,6 +242,7 @@ export async function runTurn(session, userText) {
       outputTokens,
       totalTokens: inputTokens + outputTokens,
       model: MODEL,
+      context: session.contextDebug,
     },
     sessionStatus: session.status,
     warning: "MAX_TOOL_ROUNDS exceeded",

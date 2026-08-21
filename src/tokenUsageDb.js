@@ -46,7 +46,6 @@ export function saveCallUsage(session) {
 
   db.calls.push(record);
   writeDb(db);
-  console.log(`[db] Token usage saved -> sessionId=${session.id}`);
   return record;
 }
 

@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test:conversation": "node src/scripts/scriptedConversation.js"
+    "test:conversation": "node src/scripts/scriptedConversation.js",
+    "test:context": "node src/scripts/contextBuilderTest.js"
   },
   "dependencies": {
     "@google/genai": "^0.3.1",
