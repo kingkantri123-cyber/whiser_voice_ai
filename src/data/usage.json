@@ -1,0 +1,283 @@
+{
+  "records": [
+    {
+      "id": "FXnKRr1n4R",
+      "timestamp": "2026-08-29T13:55:11.181Z",
+      "sessionId": "1C4nITDp9TyO",
+      "durationMs": 9958,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 395,
+        "audioSeconds": 2.2225625,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 3780,
+        "inputTokens": 6579,
+        "outputTokens": 326,
+        "rounds": 6,
+        "tokenBreakdown": {
+          "systemPromptTokens": 317,
+          "currentRequestTokens": 11,
+          "toolDataTokens": 228,
+          "recentConversationTokens": 6023
+        },
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          },
+          {
+            "name": "list_category_items",
+            "ok": true
+          },
+          {
+            "name": "list_category_items",
+            "ok": true
+          },
+          {
+            "name": "list_category_items",
+            "ok": true
+          },
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 470,
+        "latencyMs": 5249,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "sMnrwMdF3r",
+      "timestamp": "2026-08-29T13:55:41.342Z",
+      "sessionId": "1C4nITDp9TyO",
+      "durationMs": 3451,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 308,
+        "audioSeconds": 2.7708125,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1409,
+        "inputTokens": 3301,
+        "outputTokens": 90,
+        "rounds": 2,
+        "tokenBreakdown": {
+          "systemPromptTokens": 317,
+          "currentRequestTokens": 7,
+          "toolDataTokens": 235,
+          "recentConversationTokens": 2742
+        },
+        "toolCalls": [
+          {
+            "name": "get_item_details",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 90,
+        "latencyMs": 1207,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "hv7XlgnIFQ",
+      "timestamp": "2026-08-29T13:55:52.794Z",
+      "sessionId": "1C4nITDp9TyO",
+      "durationMs": 3855,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 225,
+        "audioSeconds": 1.092625,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1444,
+        "inputTokens": 3925,
+        "outputTokens": 191,
+        "rounds": 2,
+        "tokenBreakdown": {
+          "systemPromptTokens": 317,
+          "currentRequestTokens": 4,
+          "toolDataTokens": 70,
+          "recentConversationTokens": 3534
+        },
+        "toolCalls": [
+          {
+            "name": "add_to_cart",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 137,
+        "latencyMs": 1908,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "Xugd-OEuK8",
+      "timestamp": "2026-08-29T13:56:10.452Z",
+      "sessionId": "1C4nITDp9TyO",
+      "durationMs": 1871,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 361,
+        "audioSeconds": 1.466,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 454,
+        "inputTokens": 2115,
+        "outputTokens": 44,
+        "rounds": 1,
+        "tokenBreakdown": {
+          "systemPromptTokens": 317,
+          "currentRequestTokens": 8,
+          "toolDataTokens": 0,
+          "recentConversationTokens": 1790
+        },
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 86,
+        "latencyMs": 829,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "g7HPmRke_p",
+      "timestamp": "2026-08-29T13:56:43.919Z",
+      "sessionId": "1C4nITDp9TyO",
+      "durationMs": 17587,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 668,
+        "audioSeconds": 6.8043125,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 13156,
+        "inputTokens": 6814,
+        "outputTokens": 133,
+        "rounds": 3,
+        "tokenBreakdown": {
+          "systemPromptTokens": 317,
+          "currentRequestTokens": 15,
+          "toolDataTokens": 102,
+          "recentConversationTokens": 6380
+        },
+        "toolCalls": [
+          {
+            "name": "record_contact_info",
+            "ok": true
+          },
+          {
+            "name": "place_order",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 249,
+        "latencyMs": 3224,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "OlyicUwpnh",
+      "timestamp": "2026-08-29T14:11:59.357Z",
+      "sessionId": "z7Bkd6_bORG5",
+      "durationMs": 2909,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 309,
+        "audioSeconds": 1.4065625,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1027,
+        "inputTokens": 1983,
+        "outputTokens": 88,
+        "rounds": 2,
+        "tokenBreakdown": {
+          "systemPromptTokens": 448,
+          "currentRequestTokens": 6,
+          "toolDataTokens": 37,
+          "recentConversationTokens": 1492
+        },
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 118,
+        "latencyMs": 1365,
+        "status": "ok"
+      }
+    }
+  ]
+}

@@ -177,6 +177,55 @@
           7168
         ]
       }
+    },
+    {
+      "sessionId": "1C4nITDp9TyO",
+      "savedAt": "2026-08-29T13:56:43.901Z",
+      "startedAt": "2026-08-29T13:54:42.009Z",
+      "endedAt": "2026-08-29T13:56:43.901Z",
+      "status": "active",
+      "contact": {
+        "name": "Syed",
+        "phone": "9618734357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "2urnp4TG",
+            "itemId": "pz_margherita",
+            "itemName": "Margherita Pizza",
+            "quantity": 1,
+            "unitPrice": 9,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Small (10\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 9
+          }
+        ],
+        "total": 9,
+        "placedAt": "2026-08-29T13:56:28.836Z"
+      },
+      "metrics": {
+        "turns": 5,
+        "totalInputTokens": 22734,
+        "totalOutputTokens": 784,
+        "turnLatenciesMs": [
+          3780,
+          1409,
+          1444,
+          454,
+          13156
+        ]
+      }
     }
   ]
 }

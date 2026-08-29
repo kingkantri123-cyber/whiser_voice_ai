@@ -7,6 +7,7 @@ import { runTurn } from "./agent.js";
 import { transcribeAudio, generateSpeech } from "./groqServices.js";
 import { preprocessAudio } from "./audioProcessing.js";
 import { saveOrder, getAllOrders } from "./db.js";
+import { recordUsage, getAllUsage } from "./usageDb.js";
 
 const app = express();
 app.use(express.json());
@@ -63,29 +64,38 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
     return res.status(409).json({ error: `Session is ${session.status}` });
   }
 
+  const pipelineStartedAt = Date.now();
+  let stageReached = "stt";
+
   try {
     // Step 1a: backend audio normalization (highpass, loudness-normalize,
     // trim silence, downmix to 16kHz mono). Falls back to the raw upload
     // if ffmpeg chokes on a malformed clip, so one bad file can't 500 the call.
     let sttBuffer = audioFile.buffer;
     let sttMime = audioFile.mimetype;
+    let audioSeconds = null;
     try {
       sttBuffer = await preprocessAudio(audioFile.buffer);
       sttMime = "audio/wav";
+      // 16kHz mono 16-bit PCM WAV (44-byte header) -- see audioProcessing.js
+      audioSeconds = Math.max(0, sttBuffer.length - 44) / 2 / 16000;
     } catch (preprocessErr) {
       console.warn("Audio preprocessing failed, using raw upload:", preprocessErr.message);
     }
 
     // Step 1b: STT via Groq Whisper
-    const userText = await transcribeAudio(sttBuffer, sttMime);
+    const stt = await transcribeAudio(sttBuffer, sttMime);
+    const userText = stt.text;
 
-    // Step 2: Agent processing via Gemini
+    // Step 2: Agent processing via Groq
+    stageReached = "llm";
     const agentResult = await runTurn(session, userText);
 
-    // Step 3: TTS via Groq Orpheus
+    // Step 3: TTS via Groq Orpheus (falls back to Deepgram internally)
+    stageReached = "tts";
     console.log(`Generating speech for text: "${agentResult.reply}"`);
-    const audioBuffer = await generateSpeech(agentResult.reply);
-    console.log(`Speech generated successfully. Buffer size: ${audioBuffer.length} bytes`);
+    const tts = await generateSpeech(agentResult.reply);
+    console.log(`Speech generated successfully. Buffer size: ${tts.buffer.length} bytes`);
 
     // Persist order to JSON DB if it was just placed this turn
     if (agentResult.cart?.placed) {
@@ -93,12 +103,45 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
       if (session) saveOrder(session);
     }
 
+    recordUsage({
+      sessionId,
+      durationMs: Date.now() - pipelineStartedAt,
+      status: tts.usedFallback ? "fallback" : "success",
+      stt: {
+        provider: stt.provider,
+        model: stt.model,
+        latencyMs: stt.latencyMs,
+        audioSeconds,
+        status: "ok",
+      },
+      llm: {
+        provider: "groq",
+        model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
+        latencyMs: agentResult.metrics.elapsedMs,
+        inputTokens: agentResult.metrics.inputTokens,
+        outputTokens: agentResult.metrics.outputTokens,
+        rounds: agentResult.metrics.rounds,
+        tokenBreakdown: agentResult.metrics.tokenBreakdown,
+        toolCalls: agentResult.toolCalls.map((c) => ({ name: c.name, ok: c.ok })),
+        status: "ok",
+      },
+      tts: {
+        provider: tts.provider,
+        model: tts.model,
+        usedFallback: tts.usedFallback,
+        fallbackReason: tts.fallbackReason || null,
+        characters: tts.characters,
+        latencyMs: tts.latencyMs,
+        status: "ok",
+      },
+    });
+
     // Return agent JSON payload along with Base64 audio
     res.json({
       sessionId,
       userText,
       replyText: agentResult.reply,
-      audioBase64: audioBuffer.toString("base64"),
+      audioBase64: tts.buffer.toString("base64"),
       toolCalls: agentResult.toolCalls,
       cart: agentResult.cart,
       metrics: agentResult.metrics,
@@ -106,6 +149,15 @@ app.post("/api/voice-chat", upload.single("audio"), async (req, res) => {
     });
   } catch (err) {
     console.error("Voice pipeline error:", err);
+    recordUsage({
+      sessionId,
+      durationMs: Date.now() - pipelineStartedAt,
+      status: "failed",
+      stt: { status: stageReached === "stt" ? "error" : "ok", error: stageReached === "stt" ? err.message : undefined },
+      llm: { status: stageReached === "llm" ? "error" : "ok", error: stageReached === "llm" ? err.message : undefined },
+      tts: { status: stageReached === "tts" ? "error" : "ok", error: stageReached === "tts" ? err.message : undefined },
+      failedStage: stageReached,
+    });
     res.status(500).json({ error: "Voice processing failed", detail: err.message });
   }
 });
@@ -116,9 +168,9 @@ app.post("/api/tts", async (req, res) => {
   if (!text) return res.status(400).json({ error: "Text is required" });
 
   try {
-    const audioBuffer = await generateSpeech(text, voice);
+    const tts = await generateSpeech(text, voice);
     res.setHeader("Content-Type", "audio/wav");
-    res.send(audioBuffer);
+    res.send(tts.buffer);
   } catch (err) {
     res.status(500).json({ error: "TTS failed", detail: err.message });
   }
@@ -137,8 +189,8 @@ app.post("/api/greet", async (_req, res) => {
     "Welcome! Thank you for calling. I'm your voice ordering assistant. " +
     "Would you like to hear today's menu, or are you ready to place your order?";
   try {
-    const audioBuffer = await generateSpeech(greeting);
-    res.json({ audioBase64: audioBuffer.toString("base64"), text: greeting });
+    const tts = await generateSpeech(greeting);
+    res.json({ audioBase64: tts.buffer.toString("base64"), text: greeting });
   } catch (err) {
     res.status(500).json({ error: "Greeting failed", detail: err.message });
   }
@@ -148,6 +200,12 @@ app.post("/api/greet", async (_req, res) => {
 app.get("/api/orders", (_req, res) => {
   const orders = getAllOrders();
   res.json({ orders });
+});
+
+// Usage/observability dashboard data — raw per-turn records, JSON file backed.
+// All aggregation/filtering happens client-side in public/dashboard.html.
+app.get("/api/usage", (_req, res) => {
+  res.json({ records: getAllUsage() });
 });
 
 app.post("/api/end/:sessionId", (req, res) => {

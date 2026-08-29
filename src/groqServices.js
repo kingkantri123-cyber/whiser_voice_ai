@@ -11,14 +11,16 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 export async function transcribeAudio(audioBuffer, mimeType = "audio/wav") {
     // Convert Node buffer into a File object for Groq SDK
     const audioFile = new File([audioBuffer], "speech.wav", { type: mimeType });
+    const model = "whisper-large-v3-turbo";
+    const startedAt = Date.now();
 
     const response = await groq.audio.transcriptions.create({
         file: audioFile,
-        model: "whisper-large-v3-turbo",
+        model,
         response_format: "json",
     });
 
-    return response.text;
+    return { text: response.text, provider: "groq", model, latencyMs: Date.now() - startedAt };
 }
 
 /**
@@ -28,19 +30,37 @@ export async function transcribeAudio(audioBuffer, mimeType = "audio/wav") {
  * @returns {Promise<Buffer>} Audio WAV buffer.
  */
 export async function generateSpeech(text, voice = "hannah") {
+    const startedAt = Date.now();
+    const model = "canopylabs/orpheus-v1-english";
     try {
         const response = await groq.audio.speech.create({
-            model: "canopylabs/orpheus-v1-english",
+            model,
             voice: voice,
             input: text,
             response_format: "wav", // Orpheus only supports wav, not mp3
         });
 
         const arrayBuffer = await response.arrayBuffer();
-        return Buffer.from(arrayBuffer);
+        return {
+            buffer: Buffer.from(arrayBuffer),
+            provider: "canopy",
+            model,
+            usedFallback: false,
+            characters: text.length,
+            latencyMs: Date.now() - startedAt,
+        };
     } catch (groqError) {
         console.warn("Canopy TTS failed; trying Deepgram fallback:", groqError.message);
-        return generateSpeechWithDeepgram(text);
+        const buffer = await generateSpeechWithDeepgram(text);
+        return {
+            buffer,
+            provider: "deepgram",
+            model: "aura-asteria-en",
+            usedFallback: true,
+            fallbackReason: groqError.message,
+            characters: text.length,
+            latencyMs: Date.now() - startedAt,
+        };
     }
 }
 
