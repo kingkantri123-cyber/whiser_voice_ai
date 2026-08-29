@@ -8,6 +8,8 @@ import { transcribeAudio, generateSpeech } from "./groqServices.js";
 import { preprocessAudio } from "./audioProcessing.js";
 import { saveOrder, getAllOrders } from "./db.js";
 import { recordUsage, getAllUsage } from "./usageDb.js";
+import { AccessToken } from "livekit-server-sdk";
+import { RoomAgentDispatch, RoomConfiguration } from "@livekit/protocol";
 
 const app = express();
 app.use(express.json());
@@ -25,6 +27,31 @@ app.post("/api/session", (_req, res) => {
   const sessionId = nanoid(12);
   sessionStore.create(sessionId);
   res.json({ sessionId });
+});
+
+// Mints a LiveKit room-join token for the real-time (VAD/barge-in) call
+// flow. Room name encodes the sessionId so the worker (livekitAgent.js) can
+// recover the same session/cart the HTTP flow would have used. Explicit
+// agent dispatch via roomConfig scopes which worker joins this room.
+app.post("/api/livekit-token", async (req, res) => {
+  const { sessionId } = req.body;
+  if (!sessionId) return res.status(400).json({ error: "sessionId is required" });
+  if (!process.env.LIVEKIT_URL || !process.env.LIVEKIT_API_KEY || !process.env.LIVEKIT_API_SECRET) {
+    return res.status(500).json({ error: "LiveKit is not configured on the server" });
+  }
+
+  sessionStore.getOrCreate(sessionId);
+  const roomName = `call-${sessionId}`;
+
+  const token = new AccessToken(process.env.LIVEKIT_API_KEY, process.env.LIVEKIT_API_SECRET, {
+    identity: `caller-${sessionId}`,
+  });
+  token.addGrant({ room: roomName, roomJoin: true, canPublish: true, canSubscribe: true, canPublishData: true });
+  token.roomConfig = new RoomConfiguration({
+    agents: [new RoomAgentDispatch({ agentName: process.env.LIVEKIT_AGENT_NAME || "voice-order-agent" })],
+  });
+
+  res.json({ token: await token.toJwt(), url: process.env.LIVEKIT_URL, roomName });
 });
 
 // Text Chat Endpoint

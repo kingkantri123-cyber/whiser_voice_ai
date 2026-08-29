@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voice Ordering Agent</title>
+    <title>Voice Ordering Agent — Live Call</title>
     <meta name="description"
-        content="AI-powered voice ordering agent — speak your order and let the agent handle the rest." />
+        content="AI-powered voice ordering agent over LiveKit — real-time VAD, barge-in, and echo cancellation." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
@@ -78,6 +78,10 @@
             font-size: 0.78rem;
             color: var(--muted);
             margin-top: 2px;
+        }
+
+        .header-text p a {
+            color: var(--accent2);
         }
 
         #sessionBadge {
@@ -188,6 +192,10 @@
             border: 1px solid var(--border);
             align-self: flex-start;
             border-bottom-left-radius: 4px;
+        }
+
+        .msg.interim {
+            opacity: 0.6;
         }
 
         .msg .label {
@@ -360,22 +368,6 @@
             }
         }
 
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
         .cart-body {
             flex: 1;
             overflow-y: auto;
@@ -480,10 +472,10 @@
 
 <body>
     <header>
-        <div class="logo">🍕</div>
+        <div class="logo">📡</div>
         <div class="header-text">
-            <h1>Voice Ordering Agent</h1>
-            <p>Powered by Groq Whisper + Gemini · <a href="/live-call.html" style="color:var(--accent2)">try the LiveKit live-call demo</a></p>
+            <h1>Voice Ordering Agent — Live Call</h1>
+            <p>Real-time over LiveKit (VAD + barge-in) · <a href="/index.html">switch to legacy demo</a></p>
         </div>
         <div id="sessionBadge">Session: —</div>
     </header>
@@ -493,7 +485,7 @@
             <div id="chatLog">
                 <div class="empty-state" id="emptyState">
                     <span class="icon">🎙️</span>
-                    <span>Start the call and speak naturally</span>
+                    <span>Start the call and speak naturally — you can interrupt the agent anytime</span>
                 </div>
             </div>
             <div class="controls">
@@ -503,7 +495,6 @@
                     <span id="btnLabel">Loading…</span>
                     <div class="wave" id="waveEl"><span></span><span></span><span></span><span></span><span></span>
                     </div>
-                    <div class="spinner" id="spinner"></div>
                 </button>
             </div>
         </div>
@@ -518,23 +509,41 @@
             </div>
         </div>
     </main>
-    <audio id="agentAudio" style="display:none"></audio>
-    <script>
-        let sessionId = null, mediaRecorder = null, audioChunks = [], isRecording = false, isBusy = false;
-        let callActive = false, stoppingCall = false, audioStream = null, audioContext = null, analyser = null, vadFrame = null;
-        let speechStartedAt = 0, lastSpeechAt = 0, noiseFloor = 0.012, activeRequest = null;
-        let assistantSpeaking = false, playbackUrl = null, resolvePlayback = null, vadCalibratedAt = 0, turnGeneration = 0;
-        const SPEECH_START_MARGIN = 0.022, SPEECH_STOP_MARGIN = 0.012, SILENCE_MS = 850, MIN_SPEECH_MS = 450, MAX_UTTERANCE_MS = 15000;
-        const recordBtn = document.getElementById('recordBtn'), btnIcon = document.getElementById('btnIcon'), btnLabel = document.getElementById('btnLabel'), waveEl = document.getElementById('waveEl'), spinnerEl = document.getElementById('spinner'), statusText = document.getElementById('statusText'), chatLog = document.getElementById('chatLog'), emptyState = document.getElementById('emptyState'), cartTotal = document.getElementById('cartTotal'), cartItems = document.getElementById('cartItems'), cartEmpty = document.getElementById('cartEmpty'), orderBanner = document.getElementById('orderBanner'), agentAudio = document.getElementById('agentAudio'), sessionBadge = document.getElementById('sessionBadge');
-        function setStatus(msg, cls) { statusText.textContent = msg; statusText.className = cls ? cls : ''; }
-        function appendMessage(text, sender) {
+    <audio id="agentAudio" autoplay style="display:none"></audio>
+    <script type="module">
+        import { Room, RoomEvent, Track } from 'https://cdn.jsdelivr.net/npm/livekit-client@2.22.1/dist/livekit-client.esm.mjs';
+
+        let sessionId = null, room = null, callActive = false, localIdentity = null;
+        const segmentEls = new Map();
+
+        const recordBtn = document.getElementById('recordBtn'), btnIcon = document.getElementById('btnIcon'),
+            btnLabel = document.getElementById('btnLabel'), waveEl = document.getElementById('waveEl'),
+            statusText = document.getElementById('statusText'), chatLog = document.getElementById('chatLog'),
+            emptyState = document.getElementById('emptyState'), cartTotal = document.getElementById('cartTotal'),
+            cartItems = document.getElementById('cartItems'), cartEmpty = document.getElementById('cartEmpty'),
+            orderBanner = document.getElementById('orderBanner'), agentAudio = document.getElementById('agentAudio'),
+            sessionBadge = document.getElementById('sessionBadge');
+
+        function setStatus(msg, cls) { statusText.textContent = msg; statusText.className = cls || ''; }
+
+        function upsertSegment(id, text, sender, final) {
             if (!text) return;
             emptyState.style.display = 'none';
-            const wrap = document.createElement('div'); wrap.className = 'msg ' + sender;
-            const label = document.createElement('div'); label.className = 'label'; label.textContent = sender === 'user' ? '👤 You' : '🤖 Agent';
-            const body = document.createElement('div'); body.textContent = text;
-            wrap.appendChild(label); wrap.appendChild(body); chatLog.appendChild(wrap); chatLog.scrollTop = chatLog.scrollHeight;
+            let wrap = segmentEls.get(id);
+            if (!wrap) {
+                wrap = document.createElement('div'); wrap.className = 'msg ' + sender + ' interim';
+                const label = document.createElement('div'); label.className = 'label';
+                label.textContent = sender === 'user' ? '👤 You' : '🤖 Agent';
+                const body = document.createElement('div'); body.className = 'body';
+                wrap.appendChild(label); wrap.appendChild(body);
+                chatLog.appendChild(wrap);
+                segmentEls.set(id, wrap);
+            }
+            wrap.querySelector('.body').textContent = text;
+            if (final) wrap.classList.remove('interim');
+            chatLog.scrollTop = chatLog.scrollHeight;
         }
+
         function updateCart(cart) {
             if (!cart) return;
             const total = typeof cart.total === 'number' ? cart.total : 0;
@@ -551,143 +560,78 @@
             }
             if (cart.placed) { orderBanner.style.display = 'block'; setStatus('Order placed! 🎉', 'ready'); setBtnState('done'); }
         }
+
         function setBtnState(state) {
-            recordBtn.disabled = false; waveEl.classList.remove('active'); spinnerEl.style.display = 'none'; recordBtn.classList.remove('recording'); btnIcon.style.display = 'inline';
+            recordBtn.disabled = false; waveEl.classList.remove('active'); recordBtn.classList.remove('recording'); btnIcon.style.display = 'inline';
             if (state === 'ready') { btnIcon.textContent = '📞'; btnLabel.textContent = 'Start Call'; }
-            else if (state === 'recording') { btnIcon.textContent = '📵'; btnLabel.textContent = 'End Call'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
-            else if (state === 'processing') { btnIcon.textContent = '📵'; btnLabel.textContent = 'End Call'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
+            else if (state === 'connecting') { btnIcon.textContent = '⏳'; btnLabel.textContent = 'Connecting…'; recordBtn.disabled = true; }
+            else if (state === 'live') { btnIcon.textContent = '📵'; btnLabel.textContent = 'End Call'; recordBtn.classList.add('recording'); waveEl.classList.add('active'); }
             else if (state === 'loading') { btnIcon.textContent = '⏳'; btnLabel.textContent = 'Loading…'; recordBtn.disabled = true; }
             else if (state === 'done') { btnIcon.textContent = '✅'; btnLabel.textContent = 'Order Complete'; recordBtn.disabled = true; }
         }
+
         async function initSession() {
             try {
-                // Create session
                 const res = await fetch('/api/session', { method: 'POST' });
                 if (!res.ok) throw new Error('Session error: ' + res.status);
                 const data = await res.json(); sessionId = data.sessionId;
                 sessionBadge.textContent = 'Session: ' + sessionId.substring(0, 8) + '…'; sessionBadge.style.display = 'block';
-                setStatus('Connecting…', '');
-
                 setStatus('Ready to start your call', 'ready');
                 setBtnState('ready');
             } catch (err) { setStatus('❌ Could not connect to server', ''); console.error(err); }
         }
-        function getSupportedMimeType() {
-            const types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
-            for (const t of types) { if (MediaRecorder.isTypeSupported(t)) return t; }
-            return '';
-        }
+
         async function startCall() {
             try {
-                stoppingCall = false; callActive = true;
-                audioStream = await navigator.mediaDevices.getUserMedia({ audio: { noiseSuppression: true, echoCancellation: true, autoGainControl: true, channelCount: 1 } });
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioContext.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = 0.75;
-                audioContext.createMediaStreamSource(audioStream).connect(analyser);
-                setBtnState('recording'); setStatus('Connecting your call…', 'processing');
-                vadCalibratedAt = Date.now();
-                const greetRes = await fetch('/api/greet', { method: 'POST' });
-                if (!callActive) return;
-                if (greetRes.ok) { const greetData = await greetRes.json(); appendMessage(greetData.text, 'agent'); await playBase64Audio(greetData.audioBase64); }
-                setStatus('Listening… speak naturally', 'listening');
-                monitorVoice();
-            } catch (err) { await endCall(); setStatus('❌ Microphone access is required', ''); console.error(err); }
-        }
-        async function endCall() {
-            stoppingCall = true; callActive = false; isBusy = false; turnGeneration++;
-            if (activeRequest) { activeRequest.abort(); activeRequest = null; }
-            if (vadFrame) cancelAnimationFrame(vadFrame); vadFrame = null;
-            if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-            mediaRecorder = null; audioChunks = [];
-            stopAssistantAudio();
-            if (audioStream) audioStream.getTracks().forEach(function (track) { track.stop(); });
-            audioStream = null;
-            if (audioContext) await audioContext.close().catch(function () {});
-            audioContext = null; analyser = null;
-            if (sessionId) fetch('/api/end/' + sessionId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ended' }) }).catch(function () {});
-            if (!orderBanner.style.display || orderBanner.style.display === 'none') { setBtnState('ready'); setStatus('Call ended', ''); }
-        }
-        function monitorVoice() {
-            if (!callActive || !analyser) return;
-            const samples = new Uint8Array(analyser.fftSize); analyser.getByteTimeDomainData(samples);
-            let sum = 0; for (let i = 0; i < samples.length; i++) { const value = (samples[i] - 128) / 128; sum += value * value; }
-            const volume = Math.sqrt(sum / samples.length), now = Date.now();
-            if (now - vadCalibratedAt < 1000) noiseFloor = Math.max(noiseFloor * 0.9, volume);
-            else noiseFloor = noiseFloor * 0.995 + Math.min(volume, 0.08) * 0.005;
-            const speaking = volume > noiseFloor + SPEECH_START_MARGIN;
-            const quiet = volume < noiseFloor + SPEECH_STOP_MARGIN;
-            if (speaking) {
-                lastSpeechAt = now;
-                if (assistantSpeaking) handleBargeIn();
-                if (!mediaRecorder && !isBusy) startUtterance();
-            } else if (mediaRecorder && quiet && now - lastSpeechAt > SILENCE_MS && now - speechStartedAt > MIN_SPEECH_MS) {
-                mediaRecorder.stop();
-            } else if (mediaRecorder && now - speechStartedAt > MAX_UTTERANCE_MS) {
-                mediaRecorder.stop();
-            }
-            vadFrame = requestAnimationFrame(monitorVoice);
-        }
-        function startUtterance() {
-            if (!callActive || isBusy || mediaRecorder) return;
-            audioChunks = []; speechStartedAt = Date.now(); lastSpeechAt = speechStartedAt;
-            const mimeType = getSupportedMimeType(); mediaRecorder = new MediaRecorder(audioStream, mimeType ? { mimeType } : {});
-            mediaRecorder.ondataavailable = function (event) { if (event.data.size > 0) audioChunks.push(event.data); };
-            mediaRecorder.onstop = function () { const chunks = audioChunks; audioChunks = []; mediaRecorder = null; sendAudio(chunks, mimeType || 'audio/webm'); };
-            mediaRecorder.start(100); setStatus('Listening…', 'listening');
-        }
-        async function sendAudio(chunks, mimeType) {
-            if (stoppingCall || chunks.length === 0) return;
-            isBusy = true; setBtnState('processing'); setStatus('Transcribing & thinking…', 'processing');
-            const requestController = new AbortController(); activeRequest = requestController;
-            const generation = ++turnGeneration;
-            try {
-                const ext = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('mp4') ? 'mp4' : 'webm';
-                const blob = new Blob(chunks, { type: mimeType });
-                const form = new FormData(); form.append('sessionId', sessionId); form.append('audio', blob, 'recording.' + ext);
-                const res = await fetch('/api/voice-chat', { method: 'POST', body: form, signal: requestController.signal });
-                if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || e.error || 'Server error ' + res.status); }
-                const data = await res.json();
-                if (data.userText) appendMessage(data.userText, 'user');
-                if (data.replyText) appendMessage(data.replyText, 'agent');
-                if (data.cart) updateCart(data.cart);
-                if (generation !== turnGeneration) return;
-                if (data.audioBase64 && callActive) await playBase64Audio(data.audioBase64);
-                if (generation !== turnGeneration) return;
-                if (data.sessionStatus === 'ended' || (data.cart && data.cart.placed)) { setBtnState('done'); setStatus('Order placed! 🎉', 'ready'); callActive = false; }
-                else if (callActive) { setBtnState('recording'); setStatus('Listening… speak naturally', 'listening'); }
+                callActive = true; setBtnState('connecting'); setStatus('Connecting…', 'processing');
+
+                const tokenRes = await fetch('/api/livekit-token', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId }),
+                });
+                if (!tokenRes.ok) { const e = await tokenRes.json().catch(() => ({})); throw new Error(e.error || 'Token request failed'); }
+                const { token, url } = await tokenRes.json();
+
+                room = new Room();
+                localIdentity = 'caller-' + sessionId;
+
+                room.on(RoomEvent.TrackSubscribed, (track) => {
+                    if (track.kind === Track.Kind.Audio) track.attach(agentAudio);
+                });
+                room.on(RoomEvent.DataReceived, (payload) => {
+                    try {
+                        const msg = JSON.parse(new TextDecoder().decode(payload));
+                        if (msg.type === 'cart') updateCart(msg.cart);
+                    } catch { /* ignore malformed data messages */ }
+                });
+                room.on(RoomEvent.TranscriptionReceived, (segments, participant) => {
+                    const sender = participant && participant.identity === localIdentity ? 'user' : 'agent';
+                    for (const seg of segments) upsertSegment(seg.id, seg.text, sender, seg.final);
+                });
+                room.on(RoomEvent.Disconnected, () => {
+                    callActive = false;
+                    if (orderBanner.style.display !== 'block') { setBtnState('ready'); setStatus('Call ended', ''); }
+                });
+
+                await room.connect(url, token);
+                await room.localParticipant.setMicrophoneEnabled(true, {
+                    echoCancellation: true, noiseSuppression: true, autoGainControl: true,
+                });
+
+                setBtnState('live'); setStatus('Listening… speak naturally, you can interrupt the agent', 'listening');
             } catch (err) {
-                if (err.name !== 'AbortError' && callActive) { console.error(err); setStatus('❌ Error: ' + err.message, ''); appendMessage('⚠️ ' + err.message, 'agent'); }
-            } finally { if (activeRequest === requestController) activeRequest = null; isBusy = false; }
+                await endCall();
+                setStatus('❌ ' + err.message, ''); console.error(err);
+            }
         }
+
+        async function endCall() {
+            callActive = false;
+            if (room) { await room.disconnect().catch(() => {}); room = null; }
+            if (sessionId) fetch('/api/end/' + sessionId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'ended' }) }).catch(() => {});
+            if (orderBanner.style.display !== 'block') { setBtnState('ready'); setStatus('Call ended', ''); }
+        }
+
         recordBtn.addEventListener('click', function () { if (callActive) endCall(); else startCall(); });
-        function playBase64Audio(base64) {
-            return new Promise(function (resolve) {
-                const byteChars = atob(base64), byteNums = new Uint8Array(byteChars.length);
-                for (let i = 0; i < byteChars.length; i++)byteNums[i] = byteChars.charCodeAt(i);
-                const blob = new Blob([byteNums], { type: 'audio/wav' }), url = URL.createObjectURL(blob);
-                playbackUrl = url; resolvePlayback = resolve; assistantSpeaking = true; agentAudio.src = url;
-                agentAudio.onended = function () { finishPlayback(); };
-                agentAudio.onerror = function () { finishPlayback(); };
-                agentAudio.play().catch(finishPlayback);
-            });
-        }
-        function finishPlayback() {
-            assistantSpeaking = false;
-            if (playbackUrl) { URL.revokeObjectURL(playbackUrl); playbackUrl = null; }
-            const resolve = resolvePlayback; resolvePlayback = null; if (resolve) resolve();
-        }
-        function stopAssistantAudio() {
-            if (agentAudio) { agentAudio.pause(); agentAudio.currentTime = 0; }
-            finishPlayback();
-        }
-        function handleBargeIn() {
-            if (!assistantSpeaking) return;
-            turnGeneration++;
-            stopAssistantAudio();
-            if (activeRequest) { activeRequest.abort(); activeRequest = null; }
-            isBusy = false;
-            setStatus('Listening…', 'listening');
-        }
         initSession();
     </script>
 </body>

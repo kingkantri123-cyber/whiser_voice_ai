@@ -278,6 +278,472 @@
         "latencyMs": 1365,
         "status": "ok"
       }
+    },
+    {
+      "id": "JS7a6IcvlN",
+      "timestamp": "2026-08-29T15:27:18.232Z",
+      "sessionId": "6A-JfZrt5l7z",
+      "durationMs": 1625,
+      "status": "success",
+      "stt": null,
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 721,
+        "inputTokens": 958,
+        "outputTokens": 63,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": false,
+        "characters": 87,
+        "latencyMs": 904,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "WBB12h2I4V",
+      "timestamp": "2026-08-29T15:31:11.500Z",
+      "sessionId": "jUswNBEorma0",
+      "durationMs": 2106,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 456,
+        "audioSeconds": 2.452,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 749,
+        "inputTokens": 958,
+        "outputTokens": 61,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": false,
+        "characters": 87,
+        "latencyMs": 901,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "-XNKkNkQOY",
+      "timestamp": "2026-08-29T15:31:18.284Z",
+      "sessionId": "jUswNBEorma0",
+      "durationMs": 1402,
+      "status": "success",
+      "stt": null,
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 725,
+        "inputTokens": 939,
+        "outputTokens": 67,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": false,
+        "characters": 71,
+        "latencyMs": 677,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "9Y3VxzVwtV",
+      "timestamp": "2026-08-29T15:31:31.958Z",
+      "sessionId": "jUswNBEorma0",
+      "durationMs": 2386,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 299,
+        "audioSeconds": 2.676,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 701,
+        "inputTokens": 1055,
+        "outputTokens": 61,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": false,
+        "characters": 116,
+        "latencyMs": 1386,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "phT9Ug1SPj",
+      "timestamp": "2026-08-29T15:35:15.433Z",
+      "sessionId": "ctzEIqEyf71r",
+      "durationMs": 2474,
+      "status": "success",
+      "stt": null,
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1188,
+        "inputTokens": 958,
+        "outputTokens": 60,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 128,
+        "latencyMs": 1286,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "EIHH7iDrNe",
+      "timestamp": "2026-08-29T15:36:34.262Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 3106,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 354,
+        "audioSeconds": 3.488,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 598,
+        "inputTokens": 941,
+        "outputTokens": 59,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 137,
+        "latencyMs": 2154,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "TGL3BkREel",
+      "timestamp": "2026-08-29T15:36:38.873Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 1735,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 52,
+        "latencyMs": 1735,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "WrDvPvdzWR",
+      "timestamp": "2026-08-29T15:36:53.513Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 2345,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 674,
+        "audioSeconds": 4.02,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 535,
+        "inputTokens": 1054,
+        "outputTokens": 55,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 123,
+        "latencyMs": 1136,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "uuX5IUu31f",
+      "timestamp": "2026-08-29T15:37:18.816Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 4734,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 295,
+        "audioSeconds": 3.22,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 735,
+        "inputTokens": 1208,
+        "outputTokens": 110,
+        "toolCalls": [
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 212,
+        "latencyMs": 3704,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "L_I2LLP3N7",
+      "timestamp": "2026-08-29T15:37:43.174Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 3399,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 328,
+        "audioSeconds": 4.564,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1433,
+        "inputTokens": 1615,
+        "outputTokens": 82,
+        "toolCalls": [
+          {
+            "name": "get_item_details",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 145,
+        "latencyMs": 1638,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "zjiLvX9P5r",
+      "timestamp": "2026-08-29T15:37:56.007Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 3533,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 269,
+        "audioSeconds": 2.132,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 837,
+        "inputTokens": 1627,
+        "outputTokens": 199,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 379,
+        "latencyMs": 2427,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "xdPnO9KXYs",
+      "timestamp": "2026-08-29T15:38:01.081Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 992,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 227,
+        "audioSeconds": 2.132,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 765,
+        "inputTokens": 1896,
+        "outputTokens": 112,
+        "toolCalls": [
+          {
+            "name": "add_to_cart",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": null
+    },
+    {
+      "id": "ZfbtQvV7GU",
+      "timestamp": "2026-08-29T15:38:13.459Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 3311,
+      "status": "success",
+      "stt": null,
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 842,
+        "inputTokens": 1959,
+        "outputTokens": 145,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 146,
+        "latencyMs": 2469,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "xbwXv5Ir-1",
+      "timestamp": "2026-08-29T15:38:23.965Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 2887,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 221,
+        "audioSeconds": 2.74,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 718,
+        "inputTokens": 2120,
+        "outputTokens": 116,
+        "toolCalls": [
+          {
+            "name": "view_cart",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 175,
+        "latencyMs": 1948,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "WRv40vDJlg",
+      "timestamp": "2026-08-29T15:38:45.036Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 5754,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 252,
+        "audioSeconds": 1.236,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 3027,
+        "inputTokens": 2183,
+        "outputTokens": 122,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 175,
+        "latencyMs": 2475,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "tM5o4TFEq9",
+      "timestamp": "2026-08-29T15:38:54.319Z",
+      "sessionId": "Aa3mqyEFFSV4",
+      "durationMs": 5556,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 473,
+        "audioSeconds": 5.748,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 798,
+        "inputTokens": 2213,
+        "outputTokens": 128,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 156,
+        "latencyMs": 4285,
+        "status": "ok"
+      }
     }
   ]
 }
