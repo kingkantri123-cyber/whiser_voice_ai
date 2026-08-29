@@ -1,26 +1,21 @@
 import { menu, findItem } from "./data/menu.js";
 
 // -----------------------------------------------------------------------
-// Tool schemas, in Gemini function-declaration format. Keep descriptions
-// explicit about *never guessing* -- the model should always call
-// list_menu / get_item_details rather than recall a price from earlier
-// in the conversation.
+// Tool schemas, in Gemini function-declaration format. Never guess a
+// price/item from memory -- always call list_menu / list_category_items /
+// get_item_details. Descriptions are kept short to save tokens.
 // -----------------------------------------------------------------------
 
 const optionSelectionSchema = {
   type: "array",
-  description:
-    "Selected options for the item's option groups. One entry per chosen option. " +
-    "For an option that has its own nested required choice (e.g. a combo entrée " +
-    "that requires picking a side), include a `nested` array on that entry.",
+  description: "One entry per chosen option. Add `nested` if the option has nestedOptionGroups.",
   items: {
     type: "object",
     properties: {
-      groupId: { type: "string", description: "Option group id, from get_item_details." },
-      optionId: { type: "string", description: "Chosen option id within that group." },
+      groupId: { type: "string" },
+      optionId: { type: "string" },
       nested: {
         type: "array",
-        description: "Only present when the chosen option has nestedOptionGroups.",
         items: {
           type: "object",
           properties: {
@@ -38,52 +33,47 @@ const optionSelectionSchema = {
 export const toolDeclarations = [
   {
     name: "list_menu",
-    description:
-      "List menu categories and items with base prices. Always use this instead of " +
-      "recalling menu items/prices from memory -- the menu can be filtered by category.",
+    description: "List menu category ids/names. Call first; no items.",
+    parameters: { type: "object", properties: {} },
+  },
+  {
+    name: "list_category_items",
+    description: "List items + base prices in one category.",
     parameters: {
       type: "object",
       properties: {
-        category: {
-          type: ["string", "null"],
-          description: "Optional category id to filter by (e.g. 'pizza'). Omit or pass null for the full menu.",
-        },
+        category: { type: "string", description: "Category id from list_menu." },
       },
+      required: ["category"],
     },
   },
   {
     name: "get_item_details",
-    description:
-      "Get full details for one menu item, including every option group (required and " +
-      "optional), each option's price delta, and any nested required choices. Call this " +
-      "before adding an item to the cart so you know exactly what must be asked.",
+    description: "Get one item's option groups, price deltas, nested choices. Call before add_to_cart.",
     parameters: {
       type: "object",
       properties: {
-        itemId: { type: "string", description: "Menu item id, from list_menu." },
+        itemId: { type: "string", description: "Item id from list_category_items." },
       },
       required: ["itemId"],
     },
   },
   {
     name: "add_to_cart",
-    description:
-      "Add an item to the cart. Every required option group (including nested ones) " +
-      "must be filled or this call is rejected with a specific error telling you what's " +
-      "missing -- read the error and ask the caller for exactly that.",
+    description: "Add item to cart. Rejected with an error if a required option is missing.",
     parameters: {
       type: "object",
       properties: {
         itemId: { type: "string" },
         selection: optionSelectionSchema,
-        quantity: { type: ["integer", "null"], description: "Defaults to 1." },
+        quantity: { type: ["integer", "null"], description: "Default 1." },
       },
       required: ["itemId"],
     },
   },
   {
     name: "update_cart_item",
-    description: "Change the quantity and/or selected options of an existing cart line.",
+    description: "Change quantity/options of an existing cart line.",
     parameters: {
       type: "object",
       properties: {
@@ -96,7 +86,7 @@ export const toolDeclarations = [
   },
   {
     name: "remove_from_cart",
-    description: "Remove a line item from the cart.",
+    description: "Remove a cart line.",
     parameters: {
       type: "object",
       properties: { cartItemId: { type: "string" } },
@@ -105,21 +95,17 @@ export const toolDeclarations = [
   },
   {
     name: "view_cart",
-    description: "Get the current cart contents and running total. Use this to read back the order for confirmation before placing it.",
+    description: "Get cart contents and total.",
     parameters: { type: "object", properties: {} },
   },
   {
     name: "place_order",
-    description:
-      "Finalize and place the order. Only call this after reading the full cart back to " +
-      "the caller and getting explicit confirmation. Fails if the cart is empty.",
+    description: "Finalize the order. Call only after reading the cart back and getting confirmation.",
     parameters: { type: "object", properties: {} },
   },
   {
     name: "record_contact_info",
-    description:
-      "Save the caller's name/phone/email so a confirmation can be sent. Call this once " +
-      "you have at least a phone or email, ideally before place_order.",
+    description: "Save caller name/phone/email. Call once you have phone or email.",
     parameters: {
       type: "object",
       properties: {
@@ -131,13 +117,13 @@ export const toolDeclarations = [
   },
   {
     name: "end_call",
-    description: "End the call/session. Use once the caller is done (order placed, or they want to hang up without ordering).",
+    description: "End the call.",
     parameters: {
       type: "object",
       properties: {
         reason: {
           type: ["string", "null"],
-          description: "e.g. 'order_placed', 'caller_ended', 'no_order'",
+          description: "e.g. order_placed, caller_ended, no_order",
         },
       },
     },
@@ -153,19 +139,21 @@ export const toolDeclarations = [
 export function executeTool(session, name, args) {
   switch (name) {
     case "list_menu": {
-      const categories = args.category
-        ? menu.categories.filter((c) => c.id === args.category)
-        : menu.categories;
       return {
-        categories: categories.map((c) => ({
-          id: c.id,
-          name: c.name,
-          items: c.items.map((i) => ({
-            id: i.id,
-            name: i.name,
-            description: i.description,
-            basePrice: i.basePrice,
-          })),
+        categories: menu.categories.map((c) => ({ id: c.id, name: c.name })),
+      };
+    }
+
+    case "list_category_items": {
+      const category = menu.categories.find((c) => c.id === args.category);
+      if (!category) return { error: `No menu category with id "${args.category}".` };
+      return {
+        category: { id: category.id, name: category.name },
+        items: category.items.map((i) => ({
+          id: i.id,
+          name: i.name,
+          description: i.description,
+          basePrice: i.basePrice,
         })),
       };
     }
