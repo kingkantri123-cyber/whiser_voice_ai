@@ -210,14 +210,24 @@ app.get("/api/cart/:sessionId", (req, res) => {
   res.json(session.cart.view());
 });
 
-// Welcome greeting endpoint — returns TTS audio for the opening message
+// Welcome greeting endpoint — returns TTS audio for the opening message.
+// The greeting text is fixed, so the audio is synthesized once and cached
+// in memory instead of hitting the TTS API on every call.
+const GREETING_TEXT =
+  "Welcome! Thank you for calling. I'm your voice ordering assistant. " +
+  "Would you like to hear today's menu, or are you ready to place your order?";
+let greetingAudioPromise = null;
+
 app.post("/api/greet", async (_req, res) => {
-  const greeting =
-    "Welcome! Thank you for calling. I'm your voice ordering assistant. " +
-    "Would you like to hear today's menu, or are you ready to place your order?";
   try {
-    const tts = await generateSpeech(greeting);
-    res.json({ audioBase64: tts.buffer.toString("base64"), text: greeting });
+    if (!greetingAudioPromise) {
+      greetingAudioPromise = generateSpeech(GREETING_TEXT).catch((err) => {
+        greetingAudioPromise = null; // allow retry on next request
+        throw err;
+      });
+    }
+    const tts = await greetingAudioPromise;
+    res.json({ audioBase64: tts.buffer.toString("base64"), text: GREETING_TEXT });
   } catch (err) {
     res.status(500).json({ error: "Greeting failed", detail: err.message });
   }
@@ -244,4 +254,12 @@ app.post("/api/end/:sessionId", (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Voice ordering agent listening on http://localhost:${PORT}`);
+  // Pre-synthesize the greeting at boot so the first real call doesn't pay
+  // the TTS latency for it.
+  if (!greetingAudioPromise) {
+    greetingAudioPromise = generateSpeech(GREETING_TEXT).catch((err) => {
+      greetingAudioPromise = null;
+      console.warn("[warn] greeting pre-warm failed:", err.message);
+    });
+  }
 });

@@ -268,6 +268,49 @@
         "totalOutputTokens": 0,
         "turnLatenciesMs": []
       }
+    },
+    {
+      "sessionId": "pTdxzvsqDqBR",
+      "savedAt": "2026-08-30T06:08:14.429Z",
+      "startedAt": "2026-08-30T06:05:23.428Z",
+      "endedAt": "2026-08-30T06:08:14.429Z",
+      "status": "active",
+      "contact": {
+        "name": "Syed Mehrach",
+        "phone": "9618734357"
+      },
+      "cart": {
+        "lines": [
+          {
+            "cartItemId": "tEvt46Ur",
+            "itemId": "pz_pepperoni",
+            "itemName": "Pepperoni Pizza",
+            "quantity": 1,
+            "unitPrice": 10.5,
+            "chosen": [
+              {
+                "groupName": "Size",
+                "optionName": "Small (10\")",
+                "nested": []
+              },
+              {
+                "groupName": "Crust",
+                "optionName": "Thin crust",
+                "nested": []
+              }
+            ],
+            "lineTotal": 10.5
+          }
+        ],
+        "total": 10.5,
+        "placedAt": "2026-08-30T06:08:14.427Z"
+      },
+      "metrics": {
+        "turns": 0,
+        "totalInputTokens": 0,
+        "totalOutputTokens": 0,
+        "turnLatenciesMs": []
+      }
     }
   ]
 }

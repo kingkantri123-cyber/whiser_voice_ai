@@ -119,6 +119,12 @@ function attachUsageTracking(agentSession, sessionId) {
 }
 
 export default defineAgent({
+  // Runs once per worker job process, before any job is assigned to it --
+  // loading the VAD model here instead of per-call shaves that load time off
+  // every call's greeting latency.
+  prewarm: async (proc) => {
+    proc.userData.vad = await silero.VAD.load();
+  },
   entry: async (ctx) => {
     try {
       await runEntry(ctx);
@@ -138,7 +144,7 @@ async function runEntry(ctx) {
   const sessionId = ctx.room.name.replace(/^call-/, "");
   const session = sessionStore.getOrCreate(sessionId);
 
-  const vad = await silero.VAD.load();
+  const vad = ctx.proc.userData.vad;
 
   // TEMPORARY: Deepgram Aura is the primary TTS for now instead of Groq
   // Orpheus (OrpheusTTS, still in ./orpheusTts.js) -- swap the `tts:` line
