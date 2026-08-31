@@ -1879,6 +1879,985 @@
         "latencyMs": 2158,
         "status": "ok"
       }
+    },
+    {
+      "id": "hlyQoAvU90",
+      "timestamp": "2026-08-31T12:00:57.436Z",
+      "sessionId": "gQumYz6NwLyi",
+      "durationMs": 5993,
+      "status": "success",
+      "stt": {
+        "provider": "groq",
+        "model": "whisper-large-v3-turbo",
+        "latencyMs": 2216,
+        "audioSeconds": 2.6410625,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1423,
+        "inputTokens": 2198,
+        "outputTokens": 99,
+        "rounds": 2,
+        "tokenBreakdown": {
+          "systemPromptTokens": 554,
+          "currentRequestTokens": 11,
+          "toolDataTokens": 37,
+          "recentConversationTokens": 1596
+        },
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "model": "canopylabs/orpheus-v1-english",
+        "usedFallback": false,
+        "fallbackReason": null,
+        "characters": 127,
+        "latencyMs": 1979,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "L53mp_1XYj",
+      "timestamp": "2026-08-31T12:01:40.125Z",
+      "sessionId": "gQumYz6NwLyi",
+      "durationMs": 33127,
+      "status": "failed",
+      "stt": {
+        "status": "error",
+        "error": "Request timed out."
+      },
+      "llm": {
+        "status": "ok"
+      },
+      "tts": {
+        "status": "ok"
+      },
+      "failedStage": "stt"
+    },
+    {
+      "id": "LqKowT8a_V",
+      "timestamp": "2026-08-31T12:07:39.396Z",
+      "sessionId": "tXP8astiTopq",
+      "durationMs": 1577,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1577,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "ks5_oB0ejq",
+      "timestamp": "2026-08-31T12:11:52.110Z",
+      "sessionId": "9UuMog7T-h8F",
+      "durationMs": 1642,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1642,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "B90I3fmkmB",
+      "timestamp": "2026-08-31T12:27:33.864Z",
+      "sessionId": "VFjtebGRsI_i",
+      "durationMs": 1635,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1635,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "H3flIqh4G1",
+      "timestamp": "2026-08-31T12:48:13.398Z",
+      "sessionId": "89WSUTd3APxQ",
+      "durationMs": 1554,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1554,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "BrcznUQvI9",
+      "timestamp": "2026-08-31T13:38:54.074Z",
+      "sessionId": "NBsiAGzHD8Vc",
+      "durationMs": 2856,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 2856,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "OSTAc-JHzb",
+      "timestamp": "2026-08-31T13:40:06.965Z",
+      "sessionId": "NBsiAGzHD8Vc",
+      "durationMs": 45394,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 2.6,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 40638,
+        "inputTokens": 1860,
+        "outputTokens": 30,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 37,
+        "latencyMs": 4756,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "08KMWh2vLU",
+      "timestamp": "2026-08-31T13:48:20.732Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 2042,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 2042,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "hxENBtW816",
+      "timestamp": "2026-08-31T13:48:50.940Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 14179,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.4,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 9154,
+        "inputTokens": 1858,
+        "outputTokens": 28,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 104,
+        "latencyMs": 5025,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "e6uhfSOz0o",
+      "timestamp": "2026-08-31T13:49:22.406Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 20659,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 1.2,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 13409,
+        "inputTokens": 2040,
+        "outputTokens": 68,
+        "toolCalls": [
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 176,
+        "latencyMs": 7250,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "QxcTcMF11U",
+      "timestamp": "2026-08-31T13:50:00.042Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 17385,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.2,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 2543,
+        "inputTokens": 2508,
+        "outputTokens": 160,
+        "toolCalls": [
+          {
+            "name": "get_item_details",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 366,
+        "latencyMs": 14842,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "BgLMaW6WuO",
+      "timestamp": "2026-08-31T13:50:15.787Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 3172,
+      "status": "success",
+      "stt": null,
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1452,
+        "inputTokens": 2877,
+        "outputTokens": 46,
+        "toolCalls": [
+          {
+            "name": "add_to_cart",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 153,
+        "latencyMs": 1720,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "dyG2JxsfGm",
+      "timestamp": "2026-08-31T13:50:37.936Z",
+      "sessionId": "TG7FOYuFrO2S",
+      "durationMs": 3878,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 5,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 2117,
+        "inputTokens": 2946,
+        "outputTokens": 59,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 187,
+        "latencyMs": 1761,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "cRP7Dabhxd",
+      "timestamp": "2026-08-31T13:54:57.164Z",
+      "sessionId": "Ajk8lPTuI00O",
+      "durationMs": 1538,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1538,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "Y_hrnblAiO",
+      "timestamp": "2026-08-31T13:55:11.620Z",
+      "sessionId": "Ajk8lPTuI00O",
+      "durationMs": 3199,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 1.1,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1832,
+        "inputTokens": 1860,
+        "outputTokens": 35,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 117,
+        "latencyMs": 1367,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "6i9WiqaeV3",
+      "timestamp": "2026-08-31T13:58:53.304Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 1383,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1383,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "CHnZU4UUg0",
+      "timestamp": "2026-08-31T13:58:58.257Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 1599,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.5,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1599,
+        "inputTokens": 1777,
+        "outputTokens": 46,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": null
+    },
+    {
+      "id": "9t-6Oebehc",
+      "timestamp": "2026-08-31T13:59:05.231Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 2299,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 2.9,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1478,
+        "inputTokens": 1784,
+        "outputTokens": 35,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "deepgram",
+        "usedFallback": false,
+        "characters": 182,
+        "latencyMs": 821,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "OyoK6zwLn-",
+      "timestamp": "2026-08-31T13:59:17.895Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 4033,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 5,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1393,
+        "inputTokens": 1903,
+        "outputTokens": 36,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 118,
+        "latencyMs": 2640,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "C88smy5z4_",
+      "timestamp": "2026-08-31T13:59:30.988Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 2406,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.8,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1053,
+        "inputTokens": 1958,
+        "outputTokens": 45,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 87,
+        "latencyMs": 1353,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "SLliIga52J",
+      "timestamp": "2026-08-31T13:59:47.769Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 3436,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.6,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1517,
+        "inputTokens": 2111,
+        "outputTokens": 57,
+        "toolCalls": [
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 177,
+        "latencyMs": 1919,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "H-xhy80-US",
+      "timestamp": "2026-08-31T14:00:08.336Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 2591,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.5,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1168,
+        "inputTokens": 2144,
+        "outputTokens": 68,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 143,
+        "latencyMs": 1423,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "rqnIMfDhE-",
+      "timestamp": "2026-08-31T14:00:48.496Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 3914,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.2,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1912,
+        "inputTokens": 2664,
+        "outputTokens": 109,
+        "toolCalls": [
+          {
+            "name": "get_item_details",
+            "ok": true
+          },
+          {
+            "name": "get_item_details",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 364,
+        "latencyMs": 2002,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "ups0zP00US",
+      "timestamp": "2026-08-31T14:01:15.497Z",
+      "sessionId": "Mt7dFg68HoM_",
+      "durationMs": 3801,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.8,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3.5-lightning",
+        "latencyMs": 1166,
+        "inputTokens": 2723,
+        "outputTokens": 68,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 233,
+        "latencyMs": 2635,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "1BWWYAFzGa",
+      "timestamp": "2026-08-31T14:12:55.801Z",
+      "sessionId": "rLpIMSYvb0oJ",
+      "durationMs": 1415,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1415,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "Z9RFN5C0t-",
+      "timestamp": "2026-08-31T14:13:08.275Z",
+      "sessionId": "rLpIMSYvb0oJ",
+      "durationMs": 2006,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 1.1,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 548,
+        "inputTokens": 1133,
+        "outputTokens": 58,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 118,
+        "latencyMs": 1458,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "opzM40teh2",
+      "timestamp": "2026-08-31T14:13:26.837Z",
+      "sessionId": "rLpIMSYvb0oJ",
+      "durationMs": 3055,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.2,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 958,
+        "inputTokens": 1283,
+        "outputTokens": 241,
+        "toolCalls": [
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 415,
+        "latencyMs": 2097,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "HM8QplVA3c",
+      "timestamp": "2026-08-31T14:13:34.258Z",
+      "sessionId": "rLpIMSYvb0oJ",
+      "durationMs": 2951,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.8,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1750,
+        "inputTokens": 1336,
+        "outputTokens": 142,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 84,
+        "latencyMs": 1201,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "oNknNToUki",
+      "timestamp": "2026-08-31T14:13:57.087Z",
+      "sessionId": "rLpIMSYvb0oJ",
+      "durationMs": 1640,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 2.4,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 527,
+        "inputTokens": 1369,
+        "outputTokens": 50,
+        "toolCalls": [],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 50,
+        "latencyMs": 1113,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "zPDNHSEhCt",
+      "timestamp": "2026-08-31T14:14:20.465Z",
+      "sessionId": "bPTyyHXlTHLC",
+      "durationMs": 1663,
+      "status": "success",
+      "stt": null,
+      "llm": null,
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 103,
+        "latencyMs": 1663,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "z12hoaM9eX",
+      "timestamp": "2026-08-31T14:14:32.130Z",
+      "sessionId": "bPTyyHXlTHLC",
+      "durationMs": 1984,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 1.1,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 524,
+        "inputTokens": 1135,
+        "outputTokens": 54,
+        "toolCalls": [
+          {
+            "name": "list_menu",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 109,
+        "latencyMs": 1460,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "__gjxbloFs",
+      "timestamp": "2026-08-31T14:14:58.880Z",
+      "sessionId": "bPTyyHXlTHLC",
+      "durationMs": 6515,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.5,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 1744,
+        "inputTokens": 1284,
+        "outputTokens": 294,
+        "toolCalls": [
+          {
+            "name": "list_category_items",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 658,
+        "latencyMs": 4771,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "m040J9tXvO",
+      "timestamp": "2026-08-31T14:15:14.328Z",
+      "sessionId": "bPTyyHXlTHLC",
+      "durationMs": 2435,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 3.9,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 547,
+        "inputTokens": 1574,
+        "outputTokens": 65,
+        "toolCalls": [
+          {
+            "name": "get_item_details",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 118,
+        "latencyMs": 1888,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "QvpxaOEJdl",
+      "timestamp": "2026-08-31T14:15:28.391Z",
+      "sessionId": "bPTyyHXlTHLC",
+      "durationMs": 2620,
+      "status": "success",
+      "stt": {
+        "provider": "deepgram",
+        "model": "nova-3",
+        "latencyMs": 0,
+        "audioSeconds": 4.6,
+        "status": "ok"
+      },
+      "llm": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "latencyMs": 840,
+        "inputTokens": 1790,
+        "outputTokens": 149,
+        "toolCalls": [
+          {
+            "name": "add_to_cart",
+            "ok": true
+          }
+        ],
+        "status": "ok"
+      },
+      "tts": {
+        "provider": "canopy",
+        "usedFallback": true,
+        "characters": 196,
+        "latencyMs": 1780,
+        "status": "ok"
+      }
     }
   ]
 }
